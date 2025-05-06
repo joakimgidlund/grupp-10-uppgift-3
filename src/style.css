@@ -33,6 +33,14 @@ html {
   padding: 0 0 0 10px;
 }
 
+.default-button:hover {
+  background-color: #D9D9D9
+}
+
+.default-button:active {
+  background-color: #9F9E9E;
+}
+
 .default-button > img,
 .default-button > span {
   vertical-align: middle;
