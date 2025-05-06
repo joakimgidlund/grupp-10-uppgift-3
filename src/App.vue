@@ -10,6 +10,15 @@
         <div class="light-font">HANTVERK AB</div>
       </div>
     </div>
+    <div class="header-bottom">
+      <div class="booking-text">
+        Bokningssystem
+      </div>
+      <button class="default-button">
+        <img src="./assets/plus.svg" alt="plus icon">
+        <span>Boka hantverkare</span>
+      </button>
+    </div>
   </div>
 </template>
 
@@ -24,14 +33,19 @@
   src: url("./assets/Montserrat-ExtraBold.ttf");
 }
 
+.main {
+  padding: 10px 10px 10px 25px;
+}
+
 .header {
   color: #3A464B;
   font-family: Montserrat-bold, sans-serif;
   font-size: 50px;
 
+  margin-left: -20px;
+
   display: flex;
   align-items: center;
-  margin-top: 10px;
 }
 
 .light-font {
@@ -42,5 +56,25 @@
   display: flex;
   margin-top: 5px;
   gap: 20px;
+}
+
+.header-bottom {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  height: 80px;
+  margin-top: 22px;
+}
+
+.booking-text {
+  color: #49454F;
+  font-family: Montserrat-light;
+  font-size: 40px;
+  font-weight: 600;
+}
+
+.default-button {
+  height: 50px;
+  align-self: flex-end;
 }
 </style>
