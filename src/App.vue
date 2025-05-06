@@ -1,4 +1,5 @@
 <script setup>
+import CalendarComponent from "./components/CalendarComponent.vue"
 </script>
 
 <template>
@@ -19,6 +20,7 @@
         <span>Boka hantverkare</span>
       </button>
     </div>
+    <CalendarComponent/>
   </div>
 </template>
 
@@ -49,7 +51,7 @@
 }
 
 .light-font {
-  font-family: Montserrat-light;
+  font-family: Montserrat-light, sans-serif;
 }
 
 .header-text {
@@ -68,7 +70,7 @@
 
 .booking-text {
   color: #49454F;
-  font-family: Montserrat-light;
+  font-family: Montserrat-light, sans-serif;
   font-size: 40px;
   font-weight: 600;
 }
