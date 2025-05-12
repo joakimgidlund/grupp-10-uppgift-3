@@ -14,25 +14,26 @@ export default {
 </script>
 
 <template>
-    <div class="calendar-grid">
-        <div class="column-top">Anställd hantverkare</div>
+    <div class="calendar-top">
+        <div class="name-top">Anställd hantverkare</div>
         <div v-for="day in dateList" class="date">
             <div class="date-text">DAY</div>
             <div class="date-circle">{{ day }}</div>
         </div>
-        <div class=""></div>
-        <div v-for="worker in workerList" class="name-box"> 
+        <!-- <div class=""></div> -->
+    </div>
+    <div v-for="worker in workerList" class="name-box"> 
             <div class="name"> {{ worker.name }} </div>
             <div class="title"> {{ worker.title }}</div>
         </div>
-    </div>
 </template>
 
 <style scoped>
-.calendar-grid {
+/* .calendar-grid {
     display: grid;
     grid-template-columns: 238px repeat(20, 58px);
     grid-template-rows: 58px auto(20px);
+    row-gap: 43px;
 
     text-align: center;
     align-items: center;
@@ -42,12 +43,23 @@ export default {
 
     border: 1px solid #D9D9D9;
     border-radius: 10px;
+} */
+
+.calendar-top {
+    display: flex;
+    text-align: center;
+    justify-content: space-evenly;
+    
+    margin-top: 10px;
+
+    border-bottom: 1px solid #D9D9D9;
+    border-top: 1px solid #D9D9D9;
 }
 
-.column-top {
-    border-bottom: 1px solid #D9D9D9;
+.name-top {
 
     padding: 20px 0px 20px 0px;
+    margin-right: 50px;
 }
 
 
@@ -78,7 +90,7 @@ export default {
 
     padding: 5px 0px 6px 0px;
 
-    border-bottom: 1px solid #D9D9D9;
+    /* border-bottom: 1px solid #D9D9D9; */
 }
 
 .date-text {
