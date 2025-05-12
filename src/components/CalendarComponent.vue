@@ -1,14 +1,42 @@
+<script setup>
+import WorkerComponent from "./WorkerComponent.vue"
+import BookingService from "./services/BookingService.js"
+import { format, getDay, getDate, isWeekend, eachDayOfInterval, lightFormat } from "date-fns";
+</script>
+
 <script>
 export default {
     data() {
         return {
-            workerList: [
-                {name: "Johan Johansson", title: "Elektriker"},
-                {name: "Anders Andersson", title: "Målare / Snickare"},                
-            ],
-
-            dateList: ["31", "1", "2", "3", "4", "1", "2", "3", "4", "1", "2", "3", "4", "1", "2", "3", "4", "2", "3", "4"]
+            bookingData: [],
+            dateInterval: [],
         }
+    },
+
+    methods: {
+
+    },
+
+    created() {
+        this.dateInterval = eachDayOfInterval({
+            start: new Date(2025, 2, 31),
+            end: new Date(2025, 3, 25)
+        })
+
+        // for(const date of this.dateInterval) {
+        //     if(date.getDay() === 0 || date.getDay() === 6) {
+        //         console.log("Delete: " + date)
+        //         const index = this.dateInterval.indexOf(date)
+        //         console.log(index)
+        //         this.dateInterval.slice(index, index)
+        //     }
+        // }
+
+        const noWeekends = this.dateInterval.filter(date => !(date.getDay() === 6 || date.getDay() === 0))
+
+        this.dateInterval = noWeekends
+
+        BookingService.getBookingData().then(data => this.bookingData = data)
     }
 }
 </script>
@@ -16,16 +44,13 @@ export default {
 <template>
     <div class="calendar-top">
         <div class="name-top">Anställd hantverkare</div>
-        <div v-for="day in dateList" class="date">
-            <div class="date-text">DAY</div>
-            <div class="date-circle">{{ day }}</div>
+        <div v-for="day in dateInterval" class="date">
+            <div class="date-text">{{ format(day, "EEE") }}</div>
+            <div class="date-circle">{{ getDate(day) }}</div>
         </div>
         <!-- <div class=""></div> -->
     </div>
-    <div v-for="worker in workerList" class="name-box"> 
-            <div class="name"> {{ worker.name }} </div>
-            <div class="title"> {{ worker.title }}</div>
-        </div>
+    <WorkerComponent v-for="booking in bookingData" :key="booking" :name="booking.name" :professions="booking.professions" :bookings="booking.bookings"></WorkerComponent>
 </template>
 
 <style scoped>
@@ -49,7 +74,7 @@ export default {
     display: flex;
     text-align: center;
     justify-content: space-evenly;
-    
+
     margin-top: 10px;
 
     border-bottom: 1px solid #D9D9D9;
@@ -57,26 +82,11 @@ export default {
 }
 
 .name-top {
-
-    padding: 20px 0px 20px 0px;
+    padding: 20px 0px 20px 30px;
     margin-right: 50px;
-}
 
-
-.name-box {
-    align-content: center;
-    
-    grid-column: 1;
-}
-
-.name {
-    font-weight: 600;
-}
-
-.title {
-    font-size: 13px;
-    font-weight: 400;
-    color: #5D5D5D;
+    text-align: center;
+    text-wrap: nowrap;
 }
 
 .date {
