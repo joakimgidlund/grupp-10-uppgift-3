@@ -36,7 +36,7 @@ export default {
 
         this.dateInterval = noWeekends
 
-        BookingService.getBookingData().then(data => this.bookingData = data)
+        BookingService.getBookingData()
     }
 }
 </script>

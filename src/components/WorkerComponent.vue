@@ -27,39 +27,39 @@ export default {
     },
 
     methods: {
-        parseBookingData() {
-            for (const booking of this.bookings) {
-                const start = new Date(booking.from)
-                const end = new Date(booking.to)
+        // parseBookingData() {
+        //     for (const booking of this.bookings) {
+        //         const start = new Date(booking.from)
+        //         const end = new Date(booking.to)
 
-                const bookingInterval = eachDayOfInterval({
-                    start: start,
-                    end: end
-                }).filter(date => !(date.getDay() === 6 || date.getDay() === 0))
+        //         const bookingInterval = eachDayOfInterval({
+        //             start: start,
+        //             end: end
+        //         }).filter(date => !(date.getDay() === 6 || date.getDay() === 0))
 
-                for (const date of bookingInterval) {
-                    if (!isAfter(date, new Date(2025, 3, 25))) {
+        //         for (const date of bookingInterval) {
+        //             if (!isAfter(date, new Date(2025, 3, 25))) {
 
-                        // if (this.details.includes(date)) {
-                        //     console.log("Found date")
-                        //     const index = this.details.indexOf(date);
-                        //     this.details[index].activity.push(booking.activity)
-                        //     return
-                        // }
+        //                 // if (this.details.includes(date)) {
+        //                 //     console.log("Found date")
+        //                 //     const index = this.details.indexOf(date);
+        //                 //     this.details[index].activity.push(booking.activity)
+        //                 //     return
+        //                 // }
 
-                        this.details.push(
-                            {
-                                activity: booking.activity,
-                                date: date,
-                                percentage: booking.percentage
-                            }
-                        )
-                    }
-                }
-            }
+        //                 this.details.push(
+        //                     {
+        //                         activity: booking.activity,
+        //                         date: date,
+        //                         percentage: booking.percentage
+        //                     }
+        //                 )
+        //             }
+        //         }
+        //     }
 
-            console.log(this.details)
-        }
+        //     console.log(this.details)
+        // }
 
     },
 
@@ -74,12 +74,12 @@ export default {
     created() {
         this.parseBookingData()
 
-        this.dates = eachDayOfInterval({
-            start: new Date(2025, 2, 31),
-            end: new Date(2025, 3, 25)
-        })
+        // this.dates = eachDayOfInterval({
+        //     start: new Date(2025, 2, 31),
+        //     end: new Date(2025, 3, 25)
+        // })
 
-        this.dates = this.dates.filter(date => !(date.getDay() === 6 || date.getDay() === 0))
+        // this.dates = this.dates.filter(date => !(date.getDay() === 6 || date.getDay() === 0))
     }
 
 }
