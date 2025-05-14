@@ -67,14 +67,15 @@ const BookingService = {
                 }
             }
 
-            console.log(dates)
-            console.log(acts)
+            // console.log(dates)
+            // console.log(acts)
             dates = this.formatDates(dates)
-            dates = this.deleteDuplicateDates(dates, acts)
+            const datesandprofs = this.deleteDuplicateDates(dates, acts)
 
             workerList.push({
                 name: d.name,
-                dates: dates,
+                dates: datesandprofs[0],
+                profs: datesandprofs[1],
             })
 
             // const index = workerList.findIndex(worker => worker.name === d.name)
@@ -95,10 +96,10 @@ const BookingService = {
 
     formatDates(dates) {
         let arr = []
-        for(let date of dates) {
+        for (let date of dates) {
             arr.push(format(date, "dd/MM/yyyy"))
         }
-        console.log(arr)
+        // console.log(arr)
         return arr
     },
 
@@ -106,15 +107,26 @@ const BookingService = {
         let newDates = []
         let newActs = []
 
-        for(let i = 0; i < dates.length; ++i) {
-            if(!newDates.includes(dates[i])) {
+        for (let i = 0; i < dates.length; ++i) {
+            if (!newDates.includes(dates[i])) {
                 newDates.push(dates[i])
-                newActs.push(acts[i])
+                newActs.push({
+                    prof1: acts[i],
+                })
+            }
+            else {
+                // console.log(newActs)
+                newActs = newActs.map(act => {
+                    return {
+                            prof1: act.prof1,
+                            prof2: acts[i]
+                    }
+                })
             }
         }
 
-        console.log(newActs)
-        return newDates
+        // console.log(newActs)
+        return [newDates, newActs]
     }
 }
 
