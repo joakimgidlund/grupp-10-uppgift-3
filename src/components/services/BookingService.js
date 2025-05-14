@@ -7,7 +7,7 @@ class Worker {
     }
 }
 
-const workerList = []
+let workerList = []
 
 const BookingService = {
     async getBookingData() {
@@ -37,16 +37,16 @@ const BookingService = {
         // Filter out weekends
         fullDates = fullDates.filter(date => !(date.getDay() === 6 || date.getDay() === 0))
 
-        for (const d of data) {
+        for (const person of data) {
             // let tempDetails = []
 
             let dates = []
             let acts = []
 
-            for (const period of d.bookings) {
+            for (const workPeriod of person.bookings) {
                 let interval = eachDayOfInterval({
-                    start: period.from,
-                    end: period.to,
+                    start: workPeriod.from,
+                    end: workPeriod.to,
                 })
 
                 interval = interval.filter(date => !(date.getDay() === 6 || date.getDay() === 0))
@@ -62,7 +62,7 @@ const BookingService = {
                         //         date: date
                         //     })
                         dates.push(date)
-                        acts.push(period.activity)
+                        acts.push(workPeriod.activity)
                     }
                 }
             }
@@ -70,13 +70,60 @@ const BookingService = {
             // console.log(dates)
             // console.log(acts)
             dates = this.formatDates(dates)
-            const datesandprofs = this.deleteDuplicateDates(dates, acts)
+            let datesandprofs = this.deleteDuplicateDates(dates, acts)
+            dates = datesandprofs[0]
+            acts = datesandprofs[1]
 
-            workerList.push({
-                name: d.name,
-                dates: datesandprofs[0],
-                profs: datesandprofs[1],
-            })
+            console.log(dates)
+
+            for(let i = 0; i < dates.length; ++i) {
+                let foundName = workerList.find(worker => worker.name === person.name)
+                // console.log(foundName)
+                if(foundName === undefined) {
+                    workerList.push(
+                        { 
+                            name: person.name,
+                            details: [
+                                {
+                                    date: dates[i],
+                                    professions: acts[i]
+                                }
+                            ]
+                        })
+                } else {
+                    console.log("else used")
+                    foundName.details.push({
+                        date: dates[i],
+                        professions: acts[i]
+                    })
+                    // workerList = workerList.map(worker => {
+                    //     return {
+                    //         name: worker.name,
+                    //         details: [
+                    //             {
+                    //                 date: dates[i],
+                    //                 professions: acts[i]
+                    //             }
+                    //         ]
+                    //     }
+                        
+                    // })
+                }
+            }
+
+            // for (let i = 0; i < dates.length; ++i) {
+            //     workerList.push({
+            //         name: person.name,
+            //         details: [
+            //             {
+            //                 date: dates[i],
+            //                 professions: acts[i]
+            //             }
+            //         ]
+            //         // dates: datesandprofs[0],
+            //         // profs: datesandprofs[1],
+            //     })
+            // }
 
             // const index = workerList.findIndex(worker => worker.name === d.name)
             // console.log("Name search: " + d.name + " Found: " + index)
@@ -118,8 +165,8 @@ const BookingService = {
                 // console.log(newActs)
                 newActs = newActs.map(act => {
                     return {
-                            prof1: act.prof1,
-                            prof2: acts[i]
+                        prof1: act.prof1,
+                        prof2: acts[i]
                     }
                 })
             }
