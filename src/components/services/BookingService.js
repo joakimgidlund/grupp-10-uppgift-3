@@ -1,26 +1,25 @@
 import { format, eachDayOfInterval, isAfter, isBefore, isEqual } from "date-fns"
-
-class Worker {
-    constructor(name, details) {
-        this.name = name
-        this.details = details
-    }
-}
-
-let workerList = []
+import testdata from "./test_data/testdata.json"
 
 const BookingService = {
+
+    //Function for fetching data, implement custom dates later
     async getBookingData() {
         try {
-            let res = await fetch("https://yrgo-web-services.netlify.app/bookings?start=2025-03-31&end=2025-04-25", {
-                method: "GET"
-            })
+            // let res = await fetch("https://yrgo-web-services.netlify.app/bookings?start=2025-03-31&end=2025-04-25", {
+            //     method: "GET"
+            // })
 
-            // ?start=" + start + "&end=" + end
-            let data = await res.json()
-            // console.table(data)
-            // console.log(data[0].bookings)
-            this.createWorkerList(data)
+            let res = testdata
+
+            // Future code for custom dates
+            // let res = await fetch("https://yrgo-web-services.netlify.app/bookings?start=" + startDate + "&end=" + endDate, {
+            //     method: "GET"
+            // })
+
+            let data = res
+
+            return this.createWorkerList(data)
 
         } catch (err) {
             console.log(err)
@@ -28,20 +27,14 @@ const BookingService = {
     },
 
     createWorkerList(data) {
-        // All days in the range, since API can send data that misses days
-        let fullDates = eachDayOfInterval({
-            start: new Date(2025, 2, 31),
-            end: new Date(2025, 3, 27)
-        })
-
-        // Filter out weekends
-        fullDates = fullDates.filter(date => !(date.getDay() === 6 || date.getDay() === 0))
+        let workerList = []
 
         for (const person of data) {
-            // let tempDetails = []
 
             let dates = []
             let acts = []
+            let percentages = []
+            let status = []
 
             for (const workPeriod of person.bookings) {
                 let interval = eachDayOfInterval({
@@ -55,90 +48,29 @@ const BookingService = {
                 // console.log(interval)
 
                 for (const date of interval) {
-                    if (isBefore(date, new Date(2025, 3, 25))) {
-                        // tempDetails.push(
-                        //     {
-                        //         act: period.activity,
-                        //         date: date
-                        //     })
+                    if (isBefore(date, new Date(2025, 3, 27))) {
                         dates.push(date)
                         acts.push(workPeriod.activity)
+                        percentages.push(workPeriod.percentage)
+                        status.push(workPeriod.status)
                     }
                 }
             }
 
-            // console.log(dates)
-            // console.log(acts)
+            // Reformat dates 
             dates = this.formatDates(dates)
-            let datesandprofs = this.deleteDuplicateDates(dates, acts)
+
+            let datesandprofs = this.deleteDuplicateDates(dates, acts, percentages, status)
             dates = datesandprofs[0]
             acts = datesandprofs[1]
+            percentages = datesandprofs[2]
+            status = datesandprofs[3]
 
-            console.log(dates)
+            // console.log(dates)
 
-            for(let i = 0; i < dates.length; ++i) {
-                let foundName = workerList.find(worker => worker.name === person.name)
-                // console.log(foundName)
-                if(foundName === undefined) {
-                    workerList.push(
-                        { 
-                            name: person.name,
-                            details: [
-                                {
-                                    date: dates[i],
-                                    professions: acts[i]
-                                }
-                            ]
-                        })
-                } else {
-                    console.log("else used")
-                    foundName.details.push({
-                        date: dates[i],
-                        professions: acts[i]
-                    })
-                    // workerList = workerList.map(worker => {
-                    //     return {
-                    //         name: worker.name,
-                    //         details: [
-                    //             {
-                    //                 date: dates[i],
-                    //                 professions: acts[i]
-                    //             }
-                    //         ]
-                    //     }
-                        
-                    // })
-                }
-            }
-
-            // for (let i = 0; i < dates.length; ++i) {
-            //     workerList.push({
-            //         name: person.name,
-            //         details: [
-            //             {
-            //                 date: dates[i],
-            //                 professions: acts[i]
-            //             }
-            //         ]
-            //         // dates: datesandprofs[0],
-            //         // profs: datesandprofs[1],
-            //     })
-            // }
-
-            // const index = workerList.findIndex(worker => worker.name === d.name)
-            // console.log("Name search: " + d.name + " Found: " + index)
+            workerList = this.generateWorkers(workerList, person, dates, acts, percentages, status)
         }
         console.log(workerList)
-    },
-
-    checkMatch(date, interval) {
-        for (const i of interval) {
-            if (isEqual(i, date)) {
-                // console.log(i + " " + date)
-                return true
-            }
-        }
-        return false
     },
 
     formatDates(dates) {
@@ -150,34 +82,98 @@ const BookingService = {
         return arr
     },
 
-    deleteDuplicateDates(dates, acts) {
+    deleteDuplicateDates(dates, acts, percentages, status) {
         let newDates = []
         let newActs = []
+        let newPerc = []
+        let newStatus = []
 
         for (let i = 0; i < dates.length; ++i) {
             if (!newDates.includes(dates[i])) {
                 newDates.push(dates[i])
-                newActs.push({
-                    prof1: acts[i],
+                newPerc.push(percentages[i])
+
+                newStatus.push(
+                    { stat1: status[i] }
+                )
+
+                newActs.push(
+                    { act1: acts[i] }
+                )
+            } else if (percentages[i] === 50) {
+                newStatus = newStatus.map(stat => {
+                    return {
+                        stat1: stat.stat1,
+                        stat2: status[i]
+                    }
                 })
-            }
-            else {
-                // console.log(newActs)
+
                 newActs = newActs.map(act => {
                     return {
-                        prof1: act.prof1,
-                        prof2: acts[i]
+                        act1: act.act1,
+                        act2: acts[i]
                     }
                 })
             }
         }
 
         // console.log(newActs)
-        return [newDates, newActs]
+        return [newDates, newActs, newPerc, newStatus]
+    },
+
+    generateWorkers(workerList, person, dates, acts, percentages, status) {
+
+        for (let i = 0; i < dates.length; ++i) {
+            // Look if this person exists in the list, if not, add all info, if they do, add only details
+            let foundName = workerList.find(worker => worker.name === person.name)
+            if (foundName === undefined) {
+                workerList.push(
+                    {
+                        name: person.name,
+                        professions: person.professions,
+                        details: [
+                            {
+                                date: dates[i],
+                                acts: acts[i],
+                                percentage: percentages[i],
+                                status: status[i]
+                            }
+                        ]
+                    })
+            } else {
+                foundName.details.push({
+                    date: dates[i],
+                    acts: acts[i],
+                    percentage: percentages[i],
+                    status: status[i]
+                })
+            }
+        }
+
+        workerList = this.buildFullDates(workerList)
+        return workerList
+    },
+
+    //implement date match to get 20 length arrays of dates for each person
+    buildFullDates(workerList) {
+
+        let fullDates = eachDayOfInterval({
+            start: new Date(2025, 2, 31),
+            end: new Date(2025, 3, 25)
+        }).filter(date => !(date.getDay() === 6 || date.getDay() === 0))
+
+        fullDates = this.formatDates(fullDates)
+
+        for (let worker of workerList) {
+            for (const deet of worker.details) {
+                let date = deet.date
+
+            }
+        }
     }
 }
 
-// Object.freeze(BookingService)
+Object.freeze(BookingService)
 
 export default BookingService
 

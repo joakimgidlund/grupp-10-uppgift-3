@@ -1,0 +1,1017 @@
+[
+    {
+        "name": "Elena Popescu",
+        "professions": [
+            "Electrician"
+        ],
+        "bookings": [
+            {
+                "activity": "Electrician",
+                "percentage": 100,
+                "status": "Preliminary",
+                "from": "2025-03-31",
+                "to": "2025-04-03"
+            },
+            {
+                "activity": "Electrician",
+                "percentage": 100,
+                "status": "Booked",
+                "from": "2025-04-04",
+                "to": "2025-04-14"
+            },
+            {
+                "activity": "Electrician",
+                "percentage": 100,
+                "status": "Preliminary",
+                "from": "2025-04-15",
+                "to": "2025-04-21"
+            },
+            {
+                "activity": "Electrician",
+                "percentage": 100,
+                "status": "Booked",
+                "from": "2025-04-24",
+                "to": "2025-05-01"
+            }
+        ]
+    },
+    {
+        "name": "Aisha Abdi",
+        "professions": [
+            "Painter"
+        ],
+        "bookings": [
+            {
+                "activity": "Painter",
+                "percentage": 100,
+                "status": "Booked",
+                "from": "2025-03-31",
+                "to": "2025-04-07"
+            },
+            {
+                "activity": "Other",
+                "percentage": 100,
+                "status": "Absent",
+                "from": "2025-04-08",
+                "to": "2025-04-18"
+            },
+            {
+                "activity": "Painter",
+                "percentage": 100,
+                "status": "Preliminary",
+                "from": "2025-04-21",
+                "to": "2025-05-02"
+            }
+        ]
+    },
+    {
+        "name": "Alejandro Rodríguez",
+        "professions": [
+            "Electrician"
+        ],
+        "bookings": [
+            {
+                "activity": "Electrician",
+                "percentage": 100,
+                "status": "Preliminary",
+                "from": "2025-03-31",
+                "to": "2025-04-04"
+            },
+            {
+                "activity": "Electrician",
+                "percentage": 100,
+                "status": "Booked",
+                "from": "2025-04-07",
+                "to": "2025-04-16"
+            },
+            {
+                "activity": "Electrician",
+                "percentage": 50,
+                "status": "Preliminary",
+                "from": "2025-04-17",
+                "to": "2025-04-22"
+            },
+            {
+                "activity": "Electrician",
+                "percentage": 50,
+                "status": "Preliminary",
+                "from": "2025-04-17",
+                "to": "2025-04-21"
+            },
+            {
+                "activity": "Electrician",
+                "percentage": 100,
+                "status": "Preliminary",
+                "from": "2025-04-23",
+                "to": "2025-05-05"
+            }
+        ]
+    },
+    {
+        "name": "Anna Larsson",
+        "professions": [
+            "Mason"
+        ],
+        "bookings": [
+            {
+                "activity": "Mason",
+                "percentage": 100,
+                "status": "Booked",
+                "from": "2025-03-31",
+                "to": "2025-04-04"
+            },
+            {
+                "activity": "Mason",
+                "percentage": 50,
+                "status": "Booked",
+                "from": "2025-04-07",
+                "to": "2025-04-15"
+            },
+            {
+                "activity": "Mason",
+                "percentage": 50,
+                "status": "Booked",
+                "from": "2025-04-07",
+                "to": "2025-04-10"
+            },
+            {
+                "activity": "Other",
+                "percentage": 100,
+                "status": "Absent",
+                "from": "2025-04-16",
+                "to": "2025-04-23"
+            },
+            {
+                "activity": "Other",
+                "percentage": 100,
+                "status": "Absent",
+                "from": "2025-04-24",
+                "to": "2025-04-28"
+            }
+        ]
+    },
+    {
+        "name": "Charlotte Dupont",
+        "professions": [
+            "Painter"
+        ],
+        "bookings": [
+            {
+                "activity": "Painter",
+                "percentage": 50,
+                "status": "Booked",
+                "from": "2025-03-31",
+                "to": "2025-04-07"
+            },
+            {
+                "activity": "Painter",
+                "percentage": 50,
+                "status": "Preliminary",
+                "from": "2025-03-31",
+                "to": "2025-04-04"
+            },
+            {
+                "activity": "Painter",
+                "percentage": 100,
+                "status": "Preliminary",
+                "from": "2025-04-08",
+                "to": "2025-04-15"
+            },
+            {
+                "activity": "Painter",
+                "percentage": 100,
+                "status": "Booked",
+                "from": "2025-04-16",
+                "to": "2025-04-25"
+            }
+        ]
+    },
+    {
+        "name": "Alexander Nyström",
+        "professions": [
+            "Painter",
+            "Carpenter"
+        ],
+        "bookings": [
+            {
+                "activity": "Painter",
+                "percentage": 50,
+                "status": "Booked",
+                "from": "2025-03-31",
+                "to": "2025-04-10"
+            },
+            {
+                "activity": "Painter",
+                "percentage": 50,
+                "status": "Preliminary",
+                "from": "2025-04-01",
+                "to": "2025-04-09"
+            },
+            {
+                "activity": "Carpenter",
+                "percentage": 100,
+                "status": "Booked",
+                "from": "2025-04-14",
+                "to": "2025-04-17"
+            },
+            {
+                "activity": "Painter",
+                "percentage": 100,
+                "status": "Preliminary",
+                "from": "2025-04-18",
+                "to": "2025-04-22"
+            },
+            {
+                "activity": "Other",
+                "percentage": 100,
+                "status": "Absent",
+                "from": "2025-04-23",
+                "to": "2025-04-29"
+            }
+        ]
+    },
+    {
+        "name": "Daniel Eriksson",
+        "professions": [
+            "Carpenter"
+        ],
+        "bookings": [
+            {
+                "activity": "Carpenter",
+                "percentage": 100,
+                "status": "Booked",
+                "from": "2025-04-01",
+                "to": "2025-04-10"
+            },
+            {
+                "activity": "Carpenter",
+                "percentage": 100,
+                "status": "Preliminary",
+                "from": "2025-04-11",
+                "to": "2025-04-21"
+            },
+            {
+                "activity": "Carpenter",
+                "percentage": 100,
+                "status": "Preliminary",
+                "from": "2025-04-24",
+                "to": "2025-05-02"
+            }
+        ]
+    },
+    {
+        "name": "Elin Andersson",
+        "professions": [
+            "Carpenter"
+        ],
+        "bookings": [
+            {
+                "activity": "Carpenter",
+                "percentage": 50,
+                "status": "Booked",
+                "from": "2025-03-31",
+                "to": "2025-04-07"
+            },
+            {
+                "activity": "Carpenter",
+                "percentage": 50,
+                "status": "Preliminary",
+                "from": "2025-03-31",
+                "to": "2025-04-07"
+            },
+            {
+                "activity": "Other",
+                "percentage": 100,
+                "status": "Absent",
+                "from": "2025-04-08",
+                "to": "2025-04-18"
+            },
+            {
+                "activity": "Carpenter",
+                "percentage": 100,
+                "status": "Preliminary",
+                "from": "2025-04-21",
+                "to": "2025-04-23"
+            },
+            {
+                "activity": "Other",
+                "percentage": 100,
+                "status": "Absent",
+                "from": "2025-04-24",
+                "to": "2025-05-01"
+            }
+        ]
+    },
+    {
+        "name": "Emma Holm",
+        "professions": [
+            "Electrician"
+        ],
+        "bookings": [
+            {
+                "activity": "Electrician",
+                "percentage": 50,
+                "status": "Preliminary",
+                "from": "2025-03-31",
+                "to": "2025-04-10"
+            },
+            {
+                "activity": "Electrician",
+                "percentage": 50,
+                "status": "Preliminary",
+                "from": "2025-03-31",
+                "to": "2025-04-03"
+            },
+            {
+                "activity": "Electrician",
+                "percentage": 100,
+                "status": "Preliminary",
+                "from": "2025-04-11",
+                "to": "2025-04-16"
+            },
+            {
+                "activity": "Electrician",
+                "percentage": 100,
+                "status": "Booked",
+                "from": "2025-04-17",
+                "to": "2025-04-22"
+            },
+            {
+                "activity": "Electrician",
+                "percentage": 100,
+                "status": "Preliminary",
+                "from": "2025-04-23",
+                "to": "2025-04-25"
+            }
+        ]
+    },
+    {
+        "name": "Erik Johansson",
+        "professions": [
+            "Electrician"
+        ],
+        "bookings": [
+            {
+                "activity": "Electrician",
+                "percentage": 100,
+                "status": "Preliminary",
+                "from": "2025-04-02",
+                "to": "2025-04-09"
+            },
+            {
+                "activity": "Electrician",
+                "percentage": 100,
+                "status": "Preliminary",
+                "from": "2025-04-13",
+                "to": "2025-04-23"
+            },
+            {
+                "activity": "Electrician",
+                "percentage": 100,
+                "status": "Preliminary",
+                "from": "2025-04-24",
+                "to": "2025-05-05"
+            }
+        ]
+    },
+    {
+        "name": "Fatima El-Masri",
+        "professions": [
+            "Painter",
+            "Painter"
+        ],
+        "bookings": [
+            {
+                "activity": "Other",
+                "percentage": 100,
+                "status": "Absent",
+                "from": "2025-03-31",
+                "to": "2025-04-08"
+            },
+            {
+                "activity": "Painter",
+                "percentage": 100,
+                "status": "Preliminary",
+                "from": "2025-04-12",
+                "to": "2025-04-17"
+            },
+            {
+                "activity": "Painter",
+                "percentage": 100,
+                "status": "Preliminary",
+                "from": "2025-04-18",
+                "to": "2025-04-22"
+            },
+            {
+                "activity": "Painter",
+                "percentage": 100,
+                "status": "Preliminary",
+                "from": "2025-04-24",
+                "to": "2025-04-30"
+            }
+        ]
+    },
+    {
+        "name": "Frida Öhman",
+        "professions": [
+            "Plumber",
+            "Mason"
+        ],
+        "bookings": [
+            {
+                "activity": "Mason",
+                "percentage": 100,
+                "status": "Booked",
+                "from": "2025-04-01",
+                "to": "2025-04-09"
+            },
+            {
+                "activity": "Mason",
+                "percentage": 100,
+                "status": "Booked",
+                "from": "2025-04-10",
+                "to": "2025-04-18"
+            },
+            {
+                "activity": "Mason",
+                "percentage": 50,
+                "status": "Preliminary",
+                "from": "2025-04-22",
+                "to": "2025-04-30"
+            },
+            {
+                "activity": "Plumber",
+                "percentage": 50,
+                "status": "Booked",
+                "from": "2025-04-24",
+                "to": "2025-05-01"
+            }
+        ]
+    },
+    {
+        "name": "Giovanni Ricci",
+        "professions": [
+            "Electrician"
+        ],
+        "bookings": [
+            {
+                "activity": "Other",
+                "percentage": 100,
+                "status": "Absent",
+                "from": "2025-03-31",
+                "to": "2025-04-11"
+            },
+            {
+                "activity": "Electrician",
+                "percentage": 100,
+                "status": "Preliminary",
+                "from": "2025-04-14",
+                "to": "2025-04-16"
+            },
+            {
+                "activity": "Electrician",
+                "percentage": 100,
+                "status": "Booked",
+                "from": "2025-04-18",
+                "to": "2025-04-21"
+            },
+            {
+                "activity": "Electrician",
+                "percentage": 100,
+                "status": "Preliminary",
+                "from": "2025-04-22",
+                "to": "2025-04-30"
+            }
+        ]
+    },
+    {
+        "name": "Gustav Pettersson",
+        "professions": [
+            "Painter"
+        ],
+        "bookings": [
+            {
+                "activity": "Painter",
+                "percentage": 100,
+                "status": "Booked",
+                "from": "2025-03-31",
+                "to": "2025-04-07"
+            },
+            {
+                "activity": "Other",
+                "percentage": 100,
+                "status": "Absent",
+                "from": "2025-04-08",
+                "to": "2025-04-16"
+            },
+            {
+                "activity": "Painter",
+                "percentage": 50,
+                "status": "Preliminary",
+                "from": "2025-04-17",
+                "to": "2025-04-28"
+            },
+            {
+                "activity": "Painter",
+                "percentage": 50,
+                "status": "Preliminary",
+                "from": "2025-04-17",
+                "to": "2025-04-23"
+            }
+        ]
+    },
+    {
+        "name": "Hassan Al-Farsi",
+        "professions": [
+            "Plumber"
+        ],
+        "bookings": [
+            {
+                "activity": "Plumber",
+                "percentage": 100,
+                "status": "Preliminary",
+                "from": "2025-03-31",
+                "to": "2025-04-09"
+            },
+            {
+                "activity": "Plumber",
+                "percentage": 100,
+                "status": "Preliminary",
+                "from": "2025-04-10",
+                "to": "2025-04-16"
+            },
+            {
+                "activity": "Plumber",
+                "percentage": 100,
+                "status": "Booked",
+                "from": "2025-04-17",
+                "to": "2025-04-28"
+            }
+        ]
+    },
+    {
+        "name": "Ida Magnusson",
+        "professions": [
+            "Painter",
+            "Plumber"
+        ],
+        "bookings": [
+            {
+                "activity": "Painter",
+                "percentage": 100,
+                "status": "Booked",
+                "from": "2025-04-03",
+                "to": "2025-04-07"
+            },
+            {
+                "activity": "Plumber",
+                "percentage": 100,
+                "status": "Booked",
+                "from": "2025-04-08",
+                "to": "2025-04-21"
+            },
+            {
+                "activity": "Painter",
+                "percentage": 50,
+                "status": "Booked",
+                "from": "2025-04-22",
+                "to": "2025-04-30"
+            },
+            {
+                "activity": "Plumber",
+                "percentage": 50,
+                "status": "Preliminary",
+                "from": "2025-04-24",
+                "to": "2025-04-30"
+            }
+        ]
+    },
+    {
+        "name": "Johan Svensson",
+        "professions": [
+            "Painter"
+        ],
+        "bookings": [
+            {
+                "activity": "Painter",
+                "percentage": 50,
+                "status": "Booked",
+                "from": "2025-03-31",
+                "to": "2025-04-07"
+            },
+            {
+                "activity": "Painter",
+                "percentage": 50,
+                "status": "Preliminary",
+                "from": "2025-03-31",
+                "to": "2025-04-02"
+            },
+            {
+                "activity": "Painter",
+                "percentage": 100,
+                "status": "Preliminary",
+                "from": "2025-04-08",
+                "to": "2025-04-11"
+            },
+            {
+                "activity": "Painter",
+                "percentage": 100,
+                "status": "Preliminary",
+                "from": "2025-04-16",
+                "to": "2025-04-28"
+            }
+        ]
+    },
+    {
+        "name": "Lars Lindberg",
+        "professions": [
+            "Plumber",
+            "Painter"
+        ],
+        "bookings": [
+            {
+                "activity": "Painter",
+                "percentage": 100,
+                "status": "Preliminary",
+                "from": "2025-04-03",
+                "to": "2025-04-09"
+            },
+            {
+                "activity": "Other",
+                "percentage": 100,
+                "status": "Absent",
+                "from": "2025-04-10",
+                "to": "2025-04-15"
+            },
+            {
+                "activity": "Plumber",
+                "percentage": 100,
+                "status": "Booked",
+                "from": "2025-04-16",
+                "to": "2025-04-25"
+            }
+        ]
+    },
+    {
+        "name": "Liam O'Connor",
+        "professions": [
+            "Plumber"
+        ],
+        "bookings": [
+            {
+                "activity": "Other",
+                "percentage": 100,
+                "status": "Absent",
+                "from": "2025-03-31",
+                "to": "2025-04-10"
+            },
+            {
+                "activity": "Other",
+                "percentage": 100,
+                "status": "Absent",
+                "from": "2025-04-11",
+                "to": "2025-04-15"
+            },
+            {
+                "activity": "Plumber",
+                "percentage": 50,
+                "status": "Preliminary",
+                "from": "2025-04-18",
+                "to": "2025-04-28"
+            },
+            {
+                "activity": "Plumber",
+                "percentage": 50,
+                "status": "Booked",
+                "from": "2025-04-16",
+                "to": "2025-04-24"
+            }
+        ]
+    },
+    {
+        "name": "Maja Persson",
+        "professions": [
+            "Painter"
+        ],
+        "bookings": [
+            {
+                "activity": "Other",
+                "percentage": 100,
+                "status": "Absent",
+                "from": "2025-03-31",
+                "to": "2025-04-11"
+            },
+            {
+                "activity": "Painter",
+                "percentage": 100,
+                "status": "Booked",
+                "from": "2025-04-14",
+                "to": "2025-04-21"
+            },
+            {
+                "activity": "Painter",
+                "percentage": 50,
+                "status": "Preliminary",
+                "from": "2025-04-22",
+                "to": "2025-05-02"
+            },
+            {
+                "activity": "Painter",
+                "percentage": 50,
+                "status": "Preliminary",
+                "from": "2025-04-22",
+                "to": "2025-05-01"
+            }
+        ]
+    },
+    {
+        "name": "Marcus Sjöberg",
+        "professions": [
+            "Carpenter"
+        ],
+        "bookings": [
+            {
+                "activity": "Carpenter",
+                "percentage": 100,
+                "status": "Preliminary",
+                "from": "2025-04-02",
+                "to": "2025-04-11"
+            },
+            {
+                "activity": "Carpenter",
+                "percentage": 100,
+                "status": "Booked",
+                "from": "2025-04-15",
+                "to": "2025-04-21"
+            },
+            {
+                "activity": "Carpenter",
+                "percentage": 100,
+                "status": "Booked",
+                "from": "2025-04-24",
+                "to": "2025-04-30"
+            }
+        ]
+    },
+    {
+        "name": "Karin Forsberg",
+        "professions": [
+            "Painter"
+        ],
+        "bookings": [
+            {
+                "activity": "Painter",
+                "percentage": 100,
+                "status": "Booked",
+                "from": "2025-03-31",
+                "to": "2025-04-04"
+            },
+            {
+                "activity": "Painter",
+                "percentage": 100,
+                "status": "Preliminary",
+                "from": "2025-04-07",
+                "to": "2025-04-16"
+            },
+            {
+                "activity": "Other",
+                "percentage": 100,
+                "status": "Absent",
+                "from": "2025-04-17",
+                "to": "2025-04-21"
+            },
+            {
+                "activity": "Painter",
+                "percentage": 100,
+                "status": "Booked",
+                "from": "2025-04-22",
+                "to": "2025-04-28"
+            }
+        ]
+    },
+    {
+        "name": "Maria Gonzalez",
+        "professions": [
+            "Mason"
+        ],
+        "bookings": [
+            {
+                "activity": "Mason",
+                "percentage": 100,
+                "status": "Preliminary",
+                "from": "2025-04-01",
+                "to": "2025-04-07"
+            },
+            {
+                "activity": "Mason",
+                "percentage": 100,
+                "status": "Booked",
+                "from": "2025-04-08",
+                "to": "2025-04-10"
+            },
+            {
+                "activity": "Other",
+                "percentage": 100,
+                "status": "Absent",
+                "from": "2025-04-11",
+                "to": "2025-04-18"
+            },
+            {
+                "activity": "Other",
+                "percentage": 100,
+                "status": "Absent",
+                "from": "2025-04-21",
+                "to": "2025-04-28"
+            }
+        ]
+    },
+    {
+        "name": "Oscar Nilsson",
+        "professions": [
+            "Carpenter",
+            "Mason"
+        ],
+        "bookings": [
+            {
+                "activity": "Carpenter",
+                "percentage": 100,
+                "status": "Booked",
+                "from": "2025-03-31",
+                "to": "2025-04-02"
+            },
+            {
+                "activity": "Carpenter",
+                "percentage": 50,
+                "status": "Preliminary",
+                "from": "2025-04-03",
+                "to": "2025-04-07"
+            },
+            {
+                "activity": "Carpenter",
+                "percentage": 50,
+                "status": "Booked",
+                "from": "2025-04-03",
+                "to": "2025-04-07"
+            },
+            {
+                "activity": "Mason",
+                "percentage": 50,
+                "status": "Booked",
+                "from": "2025-04-08",
+                "to": "2025-04-11"
+            },
+            {
+                "activity": "Mason",
+                "percentage": 50,
+                "status": "Preliminary",
+                "from": "2025-04-08",
+                "to": "2025-04-16"
+            },
+            {
+                "activity": "Other",
+                "percentage": 100,
+                "status": "Absent",
+                "from": "2025-04-17",
+                "to": "2025-04-24"
+            }
+        ]
+    },
+    {
+        "name": "Viktor Bergström",
+        "professions": [
+            "Mason"
+        ],
+        "bookings": [
+            {
+                "activity": "Mason",
+                "percentage": 100,
+                "status": "Booked",
+                "from": "2025-03-31",
+                "to": "2025-04-02"
+            },
+            {
+                "activity": "Mason",
+                "percentage": 100,
+                "status": "Preliminary",
+                "from": "2025-04-03",
+                "to": "2025-04-07"
+            },
+            {
+                "activity": "Mason",
+                "percentage": 100,
+                "status": "Preliminary",
+                "from": "2025-04-11",
+                "to": "2025-04-22"
+            },
+            {
+                "activity": "Mason",
+                "percentage": 100,
+                "status": "Booked",
+                "from": "2025-04-23",
+                "to": "2025-04-25"
+            }
+        ]
+    },
+    {
+        "name": "Sofia Karlsson",
+        "professions": [
+            "Mason"
+        ],
+        "bookings": [
+            {
+                "activity": "Mason",
+                "percentage": 100,
+                "status": "Booked",
+                "from": "2025-03-31",
+                "to": "2025-04-02"
+            },
+            {
+                "activity": "Mason",
+                "percentage": 100,
+                "status": "Booked",
+                "from": "2025-04-03",
+                "to": "2025-04-07"
+            },
+            {
+                "activity": "Mason",
+                "percentage": 100,
+                "status": "Preliminary",
+                "from": "2025-04-08",
+                "to": "2025-04-17"
+            },
+            {
+                "activity": "Other",
+                "percentage": 100,
+                "status": "Absent",
+                "from": "2025-04-18",
+                "to": "2025-04-21"
+            },
+            {
+                "activity": "Other",
+                "percentage": 100,
+                "status": "Absent",
+                "from": "2025-04-22",
+                "to": "2025-04-24"
+            }
+        ]
+    },
+    {
+        "name": "Takahiro Tanaka",
+        "professions": [
+            "Carpenter",
+            "Mason"
+        ],
+        "bookings": [
+            {
+                "activity": "Carpenter",
+                "percentage": 100,
+                "status": "Preliminary",
+                "from": "2025-04-02",
+                "to": "2025-04-07"
+            },
+            {
+                "activity": "Carpenter",
+                "percentage": 100,
+                "status": "Preliminary",
+                "from": "2025-04-08",
+                "to": "2025-04-14"
+            },
+            {
+                "activity": "Other",
+                "percentage": 100,
+                "status": "Absent",
+                "from": "2025-04-15",
+                "to": "2025-04-24"
+            }
+        ]
+    },
+    {
+        "name": "Nina Dahl",
+        "professions": [
+            "Mason"
+        ],
+        "bookings": [
+            {
+                "activity": "Mason",
+                "percentage": 100,
+                "status": "Booked",
+                "from": "2025-03-31",
+                "to": "2025-04-07"
+            },
+            {
+                "activity": "Mason",
+                "percentage": 100,
+                "status": "Preliminary",
+                "from": "2025-04-11",
+                "to": "2025-04-18"
+            },
+            {
+                "activity": "Mason",
+                "percentage": 100,
+                "status": "Preliminary",
+                "from": "2025-04-22",
+                "to": "2025-05-05"
+            }
+        ]
+    }
+]
