@@ -150,7 +150,7 @@ const BookingService = {
             }
         }
 
-        workerList = this.buildFullDates(workerList)
+        // workerList = this.buildFullDates(workerList)
         return workerList
     },
 
