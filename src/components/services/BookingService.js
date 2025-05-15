@@ -1,8 +1,7 @@
-import { format, eachDayOfInterval, isAfter, isBefore, isEqual } from "date-fns"
+import { format, eachDayOfInterval, isBefore } from "date-fns"
 import testdata from "./test_data/testdata.json"
 
 const BookingService = {
-
     //Function for fetching data, implement custom dates later
     getBookingData() {
         try {
@@ -19,15 +18,24 @@ const BookingService = {
 
             let data = res
 
-            let workerList = this.createWorkerList(data)
+            //Create a list of workers with fetched data
+            let workerList = this.parseWorkerData(data)
+
+            //Fill the workers' bookings with empty dates where there are no bookings
             workerList = this.buildFullDates(workerList)
+
+            console.log(workerList)
+
             return workerList
         } catch (err) {
             console.log(err)
         }
     },
 
-    createWorkerList(data) {
+    //Creates a list of workers based on each person in fetched data
+    //Creates an array of dates in each booking, iterates over it,
+    //adding all details
+    parseWorkerData(data) {
         let workerList = []
 
         for (const person of data) {
@@ -43,6 +51,7 @@ const BookingService = {
                     end: workPeriod.to,
                 })
 
+                //This filters out all weekends
                 interval = interval.filter(date => !(date.getDay() === 6 || date.getDay() === 0))
 
                 // console.log(fullDates)
@@ -58,7 +67,6 @@ const BookingService = {
                 }
             }
 
-            // Reformat dates 
             dates = this.formatDates(dates)
 
             let datesandprofs = this.deleteDuplicateDates(dates, acts, percentages, status)
@@ -67,18 +75,18 @@ const BookingService = {
             percentages = datesandprofs[2]
             status = datesandprofs[3]
 
-            // console.log(dates)
-
             workerList = this.generateWorkers(workerList, person, dates, acts, percentages, status)
         }
 
         return workerList
     },
 
+    //Format to an easily sorted ISO format
+    //Since we dont handle time we don't have to think about timezones
     formatDates(dates) {
         let arr = []
         for (let date of dates) {
-            arr.push(format(date, "dd/MM/yyyy"))
+            arr.push(format(date, "yyyy/MM/dd"))
         }
         // console.log(arr)
         return arr
@@ -155,48 +163,10 @@ const BookingService = {
         return workerList
     },
 
-    //implement date match to get 20 length arrays of dates for each person
+    //insert missing dates into every worker to make sure they each have 4 weeks
+    //of weekdays in their bookings
     buildFullDates(workerList) {
         let completeWorkerList = []
-
-        console.log("Building full dates...")
-        //Loop through every worker
-        for (let worker of workerList) {
-            completeWorkerList.push(worker)
-            if(worker.bookings.length === 20) {
-                continue
-            }
-            // console.log(worker)
-            for (let i = 0; i < 20; ++i) {
-                let tempDate = this.matchDate(worker.bookings[i].date)
-                if (!isEqual(tempDate, worker.bookings[i].date)) {
-                    worker.bookings.push({
-                        date: tempDate,
-                        acts: [],
-                        percentages: [0],
-                        status: ["Free"]
-                    })                    
-                }
-            }
-            
-        }
-        // completeWorkerList.push({
-        //     name: worker.name,
-        //     professions: worker.professions,
-        //     bookings: [
-        //         {
-        //             date: tempDate,
-        //             acts: [],
-        //             percentages: [0],
-        //             status: ["Free"]
-        //         }
-        //     ]
-        // })
-        console.log(completeWorkerList)
-        return completeWorkerList
-    },
-
-    matchDate(date) {
 
         let fullDates = eachDayOfInterval({
             start: new Date(2025, 2, 31),
@@ -205,16 +175,38 @@ const BookingService = {
 
         fullDates = this.formatDates(fullDates)
 
-        console.log(fullDates)
+        console.log("Building full dates...")
+        //Loop through every worker
+        for (let worker of workerList) {
+            completeWorkerList.push(worker)
 
-        for (const fdate of fullDates) {
-            console.log(date + " " + fdate)
-            if (isEqual(date, fdate)) {
-                return fdate
+            //If bookings are already filled, skip this worker.
+            //Hardcoded for now, easily changed if we want to show different time periods
+            if (worker.bookings.length === 20) {
+                continue
             }
+
+            for (const date of fullDates) {
+                let tempDate = worker.bookings.find(booking => {
+                    return booking.date === date
+                })
+                if (tempDate === undefined) {
+                    worker.bookings.push({
+                        date: date,
+                        acts: [],
+                        percentage: [0],
+                        status: ["Free"]
+                    })
+                }
+            }
+
+            worker.bookings.sort((a, b) => {
+                return new Date(a.date) - new Date(b.date)
+            })
         }
-        return date
-    }
+
+        return completeWorkerList
+    },
 }
 
 Object.freeze(BookingService)
