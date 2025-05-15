@@ -68,7 +68,7 @@ const BookingPipeline = {
                         date: date,
                         activities: booking.activity,
                         percentage: booking.percentage,
-                        status: { stat1: booking.status }
+                        status: { stat1: booking.status, stat2: "" }
                     })
             }
 
@@ -95,7 +95,7 @@ const BookingPipeline = {
 
             if (prevWorker.date === currentWorker.date) {
                 prevWorker.activities = { act1: prevWorker.activities, act2: currentWorker.activities }
-                prevWorker.status = { stat1: prevWorker.status, stat2: currentWorker.status }
+                prevWorker.status = { stat1: prevWorker.status.stat1, stat2: currentWorker.status }
                 workerData.bookings.splice(i, 1)
             }
         }
@@ -145,7 +145,7 @@ const BookingPipeline = {
                     date: date,
                     activities: "None",
                     percentage: 0,
-                    status: { stat1: "Free" }
+                    status: { stat1: "Free", stat2: "" }
                 })
             }
 

@@ -24,7 +24,7 @@ export default {
             if (this.percentage === 0) {
                 this.percentageString = "zero"
             }
-        }
+        },
     },
 
     created() {
@@ -34,12 +34,12 @@ export default {
 </script>
 
 <template>
-    <div v-if="percentage === 50" class="half-box" :class="[stat, percentageString, activities]">
+    <div v-if="percentage === 50" class="half-box" :class="[stat.stat1, stat.stat2, percentageString, activities]">
         <div class="top"> {{ percentage }}%</div>
-        <div class="bottom"> {{ stat }}. </div>
+        <div class="bottom"> {{ stat.stat1.slice(0, 4) }}. </div>
     </div>
-    <div v-else class="day-box" :class="[stat, percentageString, activities]">
-        <span v-if="stat === 'Preliminary'">Prel.</span><span v-if="stat != 'Absent'">{{ percentage }}%</span>
+    <div v-else class="day-box" :class="[stat.stat1, stat.stat2, percentageString, activities]">
+        <span v-if="stat === 'Preliminary'">Prel.</span><span v-if="stat.stat1 != 'Absent' ">{{ percentage }}%</span>
     </div>
 </template>
 
