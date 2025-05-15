@@ -36,7 +36,8 @@ export default {
 
         this.dateInterval = noWeekends
 
-        BookingService.getBookingData()
+        this.bookingData = BookingService.getBookingData()
+        // console.log(this.bookingData)
     }
 }
 </script>
@@ -54,11 +55,12 @@ export default {
 </template>
 
 <style scoped>
-/* .calendar-grid {
+.calendar-top {
     display: grid;
-    grid-template-columns: 238px repeat(20, 58px);
+    grid-template-columns: 238px repeat(20, 48px);
     grid-template-rows: 58px auto(20px);
     row-gap: 43px;
+    column-gap: 10px;
 
     text-align: center;
     align-items: center;
@@ -66,11 +68,12 @@ export default {
 
     margin-top: 10px;
 
-    border: 1px solid #D9D9D9;
-    border-radius: 10px;
-} */
+    border-top: 1px solid #D9D9D9;
+    border-bottom: 1px solid #D9D9D9;
+    /* border-radius: 10px; */
+}
 
-.calendar-top {
+/* .calendar-top {
     display: flex;
     text-align: center;
     justify-content: space-evenly;
@@ -79,10 +82,10 @@ export default {
 
     border-bottom: 1px solid #D9D9D9;
     border-top: 1px solid #D9D9D9;
-}
+} */
 
 .name-top {
-    padding: 20px 0px 20px 30px;
+    padding: 20px 0px 20px 0px;
     margin-right: 50px;
 
     text-align: center;

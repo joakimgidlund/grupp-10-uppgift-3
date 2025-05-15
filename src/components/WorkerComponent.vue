@@ -1,22 +1,13 @@
 <script setup>
 import { isAfter, compareAsc, eachDayOfInterval } from "date-fns"
 import DayComponent from "./DayComponent.vue"
+import BookingService from "./services/BookingService.js"
 </script>
 
 <script>
 export default {
     data() {
         return {
-            interval: [],
-            dates: [],
-            hundred: false,
-            details: [
-                {
-                    activity: Array,
-                    date: String,
-                    percentage: Number,
-                }
-            ]
         }
     },
 
@@ -72,7 +63,8 @@ export default {
     // }
 
     created() {
-        this.parseBookingData()
+        // this.details = BookingService.getBookingData()
+        // console.log(this.details)
 
         // this.dates = eachDayOfInterval({
         //     start: new Date(2025, 2, 31),
@@ -91,20 +83,23 @@ export default {
             <div class="name-box">
                 {{ name }}
             </div>
-            <div class="professions">
+            <div v-if="professions.length === 2" class="professions">
+                {{ professions[0] }} / {{ professions[1] }}
+            </div>
+            <div v-else class="professions">
                 {{ professions[0] }}
             </div>
         </div>
-        <DayComponent v-for="day of details"></DayComponent>
+        <DayComponent v-for="day of bookings"></DayComponent>
     </div>
 </template>
 
 <style scoped>
 .worker-row {
     display: grid;
-    grid-template-columns: 278px repeat(20, 48px);
+    grid-template-columns: 238px repeat(20, 48px);
     grid-template-rows: 63px;
-    column-gap: 8px;
+    column-gap: 10px;
     align-items: center;
     text-align: center;
 

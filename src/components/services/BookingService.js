@@ -4,7 +4,7 @@ import testdata from "./test_data/testdata.json"
 const BookingService = {
 
     //Function for fetching data, implement custom dates later
-    async getBookingData() {
+    getBookingData() {
         try {
             // let res = await fetch("https://yrgo-web-services.netlify.app/bookings?start=2025-03-31&end=2025-04-25", {
             //     method: "GET"
@@ -19,8 +19,9 @@ const BookingService = {
 
             let data = res
 
-            return this.createWorkerList(data)
-
+            let workerList = this.createWorkerList(data)
+            workerList = this.buildFullDates(workerList)
+            return workerList
         } catch (err) {
             console.log(err)
         }
@@ -70,7 +71,8 @@ const BookingService = {
 
             workerList = this.generateWorkers(workerList, person, dates, acts, percentages, status)
         }
-        console.log(workerList)
+
+        return workerList
     },
 
     formatDates(dates) {
@@ -124,14 +126,14 @@ const BookingService = {
     generateWorkers(workerList, person, dates, acts, percentages, status) {
 
         for (let i = 0; i < dates.length; ++i) {
-            // Look if this person exists in the list, if not, add all info, if they do, add only details
+            // Look if this person exists in the list, if not, add all info, if they do, add only bookings
             let foundName = workerList.find(worker => worker.name === person.name)
             if (foundName === undefined) {
                 workerList.push(
                     {
                         name: person.name,
                         professions: person.professions,
-                        details: [
+                        bookings: [
                             {
                                 date: dates[i],
                                 acts: acts[i],
@@ -141,7 +143,7 @@ const BookingService = {
                         ]
                     })
             } else {
-                foundName.details.push({
+                foundName.bookings.push({
                     date: dates[i],
                     acts: acts[i],
                     percentage: percentages[i],
@@ -150,12 +152,51 @@ const BookingService = {
             }
         }
 
-        // workerList = this.buildFullDates(workerList)
         return workerList
     },
 
     //implement date match to get 20 length arrays of dates for each person
     buildFullDates(workerList) {
+        let completeWorkerList = []
+
+        console.log("Building full dates...")
+        //Loop through every worker
+        for (let worker of workerList) {
+            completeWorkerList.push(worker)
+            if(worker.bookings.length === 20) {
+                continue
+            }
+            // console.log(worker)
+            for (let i = 0; i < 20; ++i) {
+                let tempDate = this.matchDate(worker.bookings[i].date)
+                if (!isEqual(tempDate, worker.bookings[i].date)) {
+                    worker.bookings.push({
+                        date: tempDate,
+                        acts: [],
+                        percentages: [0],
+                        status: ["Free"]
+                    })                    
+                }
+            }
+            
+        }
+        // completeWorkerList.push({
+        //     name: worker.name,
+        //     professions: worker.professions,
+        //     bookings: [
+        //         {
+        //             date: tempDate,
+        //             acts: [],
+        //             percentages: [0],
+        //             status: ["Free"]
+        //         }
+        //     ]
+        // })
+        console.log(completeWorkerList)
+        return completeWorkerList
+    },
+
+    matchDate(date) {
 
         let fullDates = eachDayOfInterval({
             start: new Date(2025, 2, 31),
@@ -164,12 +205,15 @@ const BookingService = {
 
         fullDates = this.formatDates(fullDates)
 
-        for (let worker of workerList) {
-            for (const deet of worker.details) {
-                let date = deet.date
+        console.log(fullDates)
 
+        for (const fdate of fullDates) {
+            console.log(date + " " + fdate)
+            if (isEqual(date, fdate)) {
+                return fdate
             }
         }
+        return date
     }
 }
 
