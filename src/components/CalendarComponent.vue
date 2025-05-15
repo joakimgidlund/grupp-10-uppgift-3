@@ -1,7 +1,7 @@
 <script setup>
 import WorkerComponent from "./WorkerComponent.vue"
 import BookingService from "./services/BookingService.js"
-import { format, getDay, getDate, isWeekend, eachDayOfInterval, lightFormat } from "date-fns";
+import { format, getDate, eachDayOfInterval } from "date-fns";
 </script>
 
 <script>
@@ -23,15 +23,6 @@ export default {
             end: new Date(2025, 3, 25)
         })
 
-        // for(const date of this.dateInterval) {
-        //     if(date.getDay() === 0 || date.getDay() === 6) {
-        //         console.log("Delete: " + date)
-        //         const index = this.dateInterval.indexOf(date)
-        //         console.log(index)
-        //         this.dateInterval.slice(index, index)
-        //     }
-        // }
-
         const noWeekends = this.dateInterval.filter(date => !(date.getDay() === 6 || date.getDay() === 0))
 
         this.dateInterval = noWeekends
@@ -43,67 +34,96 @@ export default {
 </script>
 
 <template>
-    <div class="calendar-top">
-        <div class="name-top">Anställd hantverkare</div>
-        <div v-for="day in dateInterval" class="date">
-            <div class="date-text">{{ format(day, "EEE") }}</div>
-            <div class="date-circle">{{ getDate(day) }}</div>
+    <div class="calendar">
+        <div class="utility-bar">
+            <input type="search" class="search">
+            <button class="default-button">
+                <img src="../assets/sort.svg" alt="sort">
+                <span>Sortera</span>
+            </button>
+            <button class="default-button">
+                <img src="../assets/filter.svg" alt="filter">
+                <span>Filter</span>
+            </button>
+
+            <div>VECKA 2VECKOR MÅNAD</div>
+            <div>
+                < April 2025>
+            </div>
         </div>
-        <!-- <div class=""></div> -->
+        <div class="calendar-top">
+            <div class="name-top">Anställd hantverkare</div>
+            <div v-for="day in dateInterval" class="date">
+                <div class="date-text">{{ format(day, "EEE") }}</div>
+                <div class="date-circle">{{ getDate(day) }}</div>
+            </div>
+        </div>
+        <WorkerComponent class="worker" v-for="worker in bookingData" :key="worker.name" :name="worker.name"
+            :professions="worker.professions" :bookings="worker.bookings"></WorkerComponent>
     </div>
-    <WorkerComponent v-for="booking in bookingData" :key="booking" :name="booking.name" :professions="booking.professions" :bookings="booking.bookings"></WorkerComponent>
 </template>
 
 <style scoped>
-.calendar-top {
-    display: grid;
-    grid-template-columns: 238px repeat(20, 48px);
-    grid-template-rows: 58px auto(20px);
-    row-gap: 43px;
-    column-gap: 10px;
-
-    text-align: center;
-    align-items: center;
-    justify-self: center;
-
-    margin-top: 10px;
-
+.calendar {
     border-top: 1px solid #D9D9D9;
-    border-bottom: 1px solid #D9D9D9;
-    /* border-radius: 10px; */
+    border-left: 1px solid #D9D9D9;
+    border-right: 1px solid #D9D9D9;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    padding: 20px 0px 20px 0px;
 }
 
-/* .calendar-top {
+.utility-bar {
     display: flex;
-    text-align: center;
+    align-items: center;
     justify-content: space-evenly;
+    padding-bottom: 20px;
+}
 
-    margin-top: 10px;
+.search {
+    background-image: url("../assets/search.svg");
+    background-repeat: no-repeat;
+    background-position-y: center;
+    background-position-x: 10px;
 
-    border-bottom: 1px solid #D9D9D9;
+    height: 40px;
+    width: 300px;
+
+    border: 1px solid #5D5D5D;
+    border-radius: 20px;
+
+    padding-left: 10px;
+}
+
+.calendar-top {
+    display: flex;
+    gap: 10px;
+
+    padding: 5px 0px 7px 0px;
+    margin-bottom: 17px;
+
     border-top: 1px solid #D9D9D9;
-} */
+    border-bottom: 1px solid #D9D9D9;
+}
 
 .name-top {
-    padding: 20px 0px 20px 0px;
-    margin-right: 50px;
+    width: 230px;
 
     text-align: center;
-    text-wrap: nowrap;
+    padding-top: 15px;
 }
 
 .date {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    text-align: center;
+
+    width: 48px;
 
     font-size: 10px;
     font-weight: 500;
     row-gap: 5px;
-
-    padding: 5px 0px 6px 0px;
-
-    /* border-bottom: 1px solid #D9D9D9; */
 }
 
 .date-text {

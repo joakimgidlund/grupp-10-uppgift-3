@@ -10,7 +10,7 @@ const BookingService = {
             //     method: "GET"
             // })
 
-            let res = oscar
+            let res = testdata
 
             // Future code for custom dates
             // let res = await fetch("https://yrgo-web-services.netlify.app/bookings?start=" + startDate + "&end=" + endDate, {
@@ -19,11 +19,7 @@ const BookingService = {
 
             let data = res
 
-            //Create a list of workers with fetched data
-            let workerList = this.parseWorkerData(data)
-
-            //Fill the workers' bookings with empty dates where there are no bookings
-            workerList = this.buildFullDates(workerList)
+            let workerList = BookingPipeline.parseWorkerData(data)
 
             console.log(workerList)
 
@@ -32,54 +28,79 @@ const BookingService = {
             console.log(err)
         }
     },
+}
 
-    //Creates a list of workers based on each person in fetched data
-    //Creates an array of dates in each booking, iterates over it,
-    //adding all details
+//Pipeline handling all data so we can't call it accidentally
+const BookingPipeline = {
     parseWorkerData(data) {
         let workerList = []
 
-        for (const person of data) {
+        for (const worker of data) {
 
-            let dates = []
-            let acts = []
-            let percentages = []
-            let status = []
+            const mappedWorker = this.mapWorkerData(worker)
 
-            for (const workPeriod of person.bookings) {
-                let interval = eachDayOfInterval({
-                    start: workPeriod.from,
-                    end: workPeriod.to,
-                })
-
-                //This filters out all weekends
-                interval = interval.filter(date => !(date.getDay() === 6 || date.getDay() === 0))
-
-                // console.log(fullDates)
-                // console.log(interval)
-
-                for (const date of interval) {
-                    if (isBefore(date, new Date(2025, 3, 27))) {
-                        dates.push(date)
-                        acts.push(workPeriod.activity)
-                        percentages.push(workPeriod.percentage)
-                        status.push(workPeriod.status)
-                    }
-                }
-            }
-
-            dates = this.formatDates(dates)
-
-            let datesandprofs = this.deleteDuplicateDates(dates, acts, percentages, status)
-            dates = datesandprofs[0]
-            acts = datesandprofs[1]
-            percentages = datesandprofs[2]
-            status = datesandprofs[3]
-
-            workerList = this.generateWorkers(workerList, person, dates, acts, percentages, status)
+            workerList.push(mappedWorker)
         }
 
         return workerList
+    },
+
+    mapWorkerData(worker) {
+
+        let workerData = {
+            name: worker.name,
+            professions: worker.professions,
+            bookings: []
+        }
+
+        for (let booking of worker.bookings) {
+            let interval = eachDayOfInterval({
+                start: booking.from,
+                end: booking.to,
+            }).filter(date => !(date.getDay() === 6 || date.getDay() === 0))
+            //This filters out all weekends
+            interval = this.formatDates(interval)
+
+            let arr = []
+            for (const date of interval) {
+                if (isBefore(date, new Date(2025, 3, 26)))
+                    arr.push({
+                        date: date,
+                        activities: booking.activity,
+                        percentage: booking.percentage,
+                        status: { stat1: booking.status }
+                    })
+            }
+
+            workerData.bookings.push(...arr)
+        }
+
+        workerData = this.duplicateDateRemap(workerData)
+        workerData = this.buildFullDates(workerData)
+
+        return workerData
+    },
+
+    //Merges two overlapping dates into one
+    duplicateDateRemap(workerData) {
+
+        //Asc. sorting before merging logic
+        workerData.bookings.sort((a, b) => {
+            return new Date(a.date) - new Date(b.date)
+        })
+
+        for (let i = 1; i < workerData.bookings.length; ++i) {
+            let currentWorker = workerData.bookings[i]
+            let prevWorker = workerData.bookings[i - 1]
+
+            if (prevWorker.date === currentWorker.date) {
+                prevWorker.activities = { act1: prevWorker.activities, act2: currentWorker.activities }
+                prevWorker.status = { stat1: prevWorker.status, stat2: currentWorker.status }
+                workerData.bookings.splice(i, 1)
+            }
+        }
+
+        return workerData
     },
 
     //Format to an easily sorted ISO format
@@ -93,75 +114,11 @@ const BookingService = {
         return arr
     },
 
-    deleteDuplicateDates(dates, acts, percentages, status) {
-        let newDates = []
-        let newActs = []
-        let newPerc = []
-        let newStatus = []
+    //Insert missing days into the worker's bookings for rendering
+    buildFullDates(workerData) {
 
-        for (let i = 0; i < dates.length; ++i) {
-            newPerc.push(percentages[i])
-            if (!newDates.includes(dates[i])) {
-                newDates.push(dates[i])
-
-            }
-
-            newStatus.push(
-                { stat1: status[i] }
-            )
-
-            newActs.push(
-                { act1: acts[i] }
-            )
-
-            if (percentages[i] === 50) {
-                newStatus.push({ stat1: newStatus[i], act2: status[i] })
-
-                newActs[i].act2 = acts[i]
-            }
-        }
-
-        // console.log(newActs)
-        return [newDates, newActs, newPerc, newStatus]
-    },
-
-    generateWorkers(workerList, person, dates, acts, percentages, status) {
-
-        for (let i = 0; i < dates.length; ++i) {
-            // Look if this person exists in the list, if not, add all info, if they do, add only bookings
-            let foundName = workerList.find(worker => worker.name === person.name)
-            if (foundName === undefined) {
-                workerList.push(
-                    {
-                        name: person.name,
-                        professions: person.professions,
-                        bookings: [
-                            {
-                                date: dates[i],
-                                acts: acts[i],
-                                percentage: percentages[i],
-                                status: status[i]
-                            }
-                        ]
-                    })
-            } else {
-                foundName.bookings.push({
-                    date: dates[i],
-                    acts: acts[i],
-                    percentage: percentages[i],
-                    status: status[i]
-                })
-            }
-        }
-
-        return workerList
-    },
-
-    //insert missing dates into every worker to make sure they each have 4 weeks
-    //of weekdays in their bookings
-    buildFullDates(workerList) {
-        let completeWorkerList = []
-
+        //An array of all days in the interval
+        //Hardcoded for simplicity, may change
         let fullDates = eachDayOfInterval({
             start: new Date(2025, 2, 31),
             end: new Date(2025, 3, 25)
@@ -170,37 +127,37 @@ const BookingService = {
         fullDates = this.formatDates(fullDates)
 
         console.log("Building full dates...")
-        //Loop through every worker
-        for (let worker of workerList) {
-            completeWorkerList.push(worker)
 
-            //If bookings are already filled, skip this worker.
-            //Hardcoded for now, easily changed if we want to show different time periods
-            if (worker.bookings.length === 20) {
-                continue
-            }
+        //If bookings are already filled, skip this worker.
+        //Hardcoded for simplicity, easily changed later
+        if (workerData.bookings.length === 20) {
+            return workerData
+        }
 
-            for (const date of fullDates) {
-                let tempDate = worker.bookings.find(booking => {
-                    return booking.date === date
+        for (const date of fullDates) {
+            //Search for a date in fullDates
+            let tempDate = workerData.bookings.find(booking => {
+                return booking.date === date
+            })
+
+            if (tempDate === undefined) {
+                workerData.bookings.push({
+                    date: date,
+                    activities: "None",
+                    percentage: 0,
+                    status: { stat1: "Free" }
                 })
-                if (tempDate === undefined) {
-                    worker.bookings.push({
-                        date: date,
-                        acts: [],
-                        percentage: [0],
-                        status: ["Free"]
-                    })
-                }
             }
 
-            worker.bookings.sort((a, b) => {
+            workerData.bookings.sort((a, b) => {
                 return new Date(a.date) - new Date(b.date)
             })
         }
 
-        return completeWorkerList
-    },
+        // workerData.bookings.splice(20)
+
+        return workerData
+    }
 }
 
 Object.freeze(BookingService)
