@@ -1,5 +1,6 @@
 import { format, eachDayOfInterval, isBefore } from "date-fns"
 import testdata from "./test_data/testdata.json"
+import oscar from "./test_data/oscar.json"
 
 const BookingService = {
     //Function for fetching data, implement custom dates later
@@ -9,7 +10,7 @@ const BookingService = {
             //     method: "GET"
             // })
 
-            let res = testdata
+            let res = oscar
 
             // Future code for custom dates
             // let res = await fetch("https://yrgo-web-services.netlify.app/bookings?start=" + startDate + "&end=" + endDate, {
@@ -99,31 +100,24 @@ const BookingService = {
         let newStatus = []
 
         for (let i = 0; i < dates.length; ++i) {
+            newPerc.push(percentages[i])
             if (!newDates.includes(dates[i])) {
                 newDates.push(dates[i])
-                newPerc.push(percentages[i])
 
-                newStatus.push(
-                    { stat1: status[i] }
-                )
+            }
 
-                newActs.push(
-                    { act1: acts[i] }
-                )
-            } else if (percentages[i] === 50) {
-                newStatus = newStatus.map(stat => {
-                    return {
-                        stat1: stat.stat1,
-                        stat2: status[i]
-                    }
-                })
+            newStatus.push(
+                { stat1: status[i] }
+            )
 
-                newActs = newActs.map(act => {
-                    return {
-                        act1: act.act1,
-                        act2: acts[i]
-                    }
-                })
+            newActs.push(
+                { act1: acts[i] }
+            )
+
+            if (percentages[i] === 50) {
+                newStatus.push({ stat1: newStatus[i], act2: status[i] })
+
+                newActs[i].act2 = acts[i]
             }
         }
 
