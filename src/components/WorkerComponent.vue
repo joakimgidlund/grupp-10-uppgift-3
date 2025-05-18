@@ -15,9 +15,26 @@ export default {
         name: String,
         professions: Array,
         bookings: Array,
+        filters: undefined,
     },
 
     methods: {
+        checkFilters() {
+            if(this.filters.length === 0) {
+                return true
+            }
+            for (const filter of this.filters) {
+                for (const prof of this.professions) {
+                    console.log(filter)
+                    console.log(prof)
+                    if (filter.name.toLowerCase() === prof.toLowerCase()) {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
     },
 
     created() {
@@ -27,21 +44,22 @@ export default {
 </script>
 
 <template>
-    <div class="worker-row">
+    <div class="worker-row" v-if="checkFilters()">
         <div class="worker">
-            <div class="name-box">
+            <div class="name-box inter-six">
                 <div>
                     {{ name }}
                 </div>
-                <div v-if="professions.length === 2" class="professions">
+                <div v-if="professions.length === 2" class="professions inter-four">
                     {{ professions[0] }} / {{ professions[1] }}
                 </div>
-                <div v-else class="professions">
+                <div v-else class="professions inter-four">
                     {{ professions[0] }}
                 </div>
             </div>
         </div>
-        <DayComponent v-for="day of bookings" :percentage="day.percentage" :stat="day.status" :activities="day.activities"></DayComponent>
+        <DayComponent v-for="day of bookings" :percentage="day.percentage" :stat="day.status"
+            :activities="day.activities"></DayComponent>
     </div>
 </template>
 
@@ -49,22 +67,22 @@ export default {
 .worker-row {
     display: flex;
     gap: 10px;
+    justify-content: space-evenly;
+    flex-shrink: 1;
     margin-bottom: 43px;
+    padding-right: 20px;
 }
 
 .name-box {
-    width: 230px;
-    text-align: center;
+    width: 210px;
     padding-top: 13px;
-}
 
-.name {
-    font-weight: 600;
+    text-align: center;
+    font-size: 16px;
 }
 
 .professions {
     font-size: 13px;
-    font-weight: 400;
     color: #5D5D5D;
 }
 </style>
