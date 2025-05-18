@@ -13,10 +13,38 @@ html {
 }
 
 body {
-  width: 1440px;
+  width: auto;
   height: auto;
 
   justify-self: center;
+}
+
+.inter-four {
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.inter-five {
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+}
+
+.inter-six {
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
+}
+
+.inter-seven {
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 700;
+  font-style: normal;
 }
 
 .default-button {
@@ -24,21 +52,23 @@ body {
   width: auto;
 
   cursor: pointer;
-  
-  font-size: 22px;
+
+  font-size: 16px;
 
   background-color: white;
   border-radius: 10px;
-  border: 1px solid #D9D9D9;
-  padding: 0 0 0 10px;
+  border: 1px solid #d9d9d9;
+  padding: 0 10px 0 10px;
 }
 
 .default-button:hover {
-  background-color: #D9D9D9
+  background-color: #d9d9d9;
+  border-color: #d9d9d9;
 }
 
 .default-button:active {
-  background-color: #9F9E9E;
+  background-color: #9f9e9e;
+  border-color: #9f9e9e;
 }
 
 .default-button > img,
