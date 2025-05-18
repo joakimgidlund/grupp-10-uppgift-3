@@ -6,33 +6,44 @@ import CalendarComponent from "./components/CalendarComponent.vue"
   <div class="main">
     <div class="header">
       <img src="./assets/logo_small.png" alt="logo">
-      <div class="header-text">
+      <div class="header-text montserrat-eight" f-weight="800">
         <div>SVENSSONS</div>
-        <div class="light-font">HANTVERK AB</div>
+        <div class="light-font montserrat-five" f-weight="500">HANTVERK AB</div>
       </div>
     </div>
     <div class="header-bottom">
-      <div class="booking-text">
+      <div class="booking-text montserrat-six">
         Bokningssystem
       </div>
-      <button class="default-button">
+      <button class="default-button inter-four">
         <img src="./assets/plus.svg" alt="plus icon">
         <span>Boka hantverkare</span>
       </button>
     </div>
-    <CalendarComponent/>
+    <CalendarComponent />
   </div>
 </template>
 
 <style scoped>
-@font-face {
-  font-family: "Montserrat-light";
-  src: url("./assets/Montserrat-Light.ttf");
+.montserrat-five {
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
 }
 
-@font-face {
-  font-family: "Montserrat-bold";
-  src: url("./assets/Montserrat-ExtraBold.ttf");
+.montserrat-six {
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
+}
+
+.montserrat-eight {
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 800;
+  font-style: normal;
 }
 
 .main {
@@ -48,10 +59,6 @@ import CalendarComponent from "./components/CalendarComponent.vue"
 
   display: flex;
   align-items: center;
-}
-
-.light-font {
-  font-family: Montserrat-light, sans-serif;
 }
 
 .header-text {
@@ -70,13 +77,12 @@ import CalendarComponent from "./components/CalendarComponent.vue"
 
 .booking-text {
   color: #49454F;
-  font-family: Montserrat-light, sans-serif;
   font-size: 40px;
-  font-weight: 600;
 }
 
 .default-button {
   height: 50px;
   align-self: flex-end;
+  font-size: 22px;
 }
 </style>
