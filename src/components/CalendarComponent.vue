@@ -3,7 +3,7 @@ import WorkerComponent from "./WorkerComponent.vue"
 import BookingService from "./services/BookingService.js"
 import SpanOptionComponent from "./SpanOptionComponent.vue"
 import SpanSelectorComponent from "./SpanSelectorComponent.vue"
-import { format, getDate, eachDayOfInterval, addWeeks, getWeek, endOfMonth, addMonths, startOfMonth } from "date-fns"
+import { format, getDate, eachDayOfInterval, addWeeks, getWeek, endOfMonth, addMonths, startOfMonth, startOfWeek } from "date-fns"
 import FilterDropDownComponent from "./FilterDropDownComponent.vue"
 </script>
 
@@ -21,8 +21,8 @@ export default {
 
     methods: {
         moveAhead() {
-            this.startDate = addMonths(this.startDate, 1)
-            this.endDate = endOfMonth(this.startDate)
+            this.startDate = addWeeks(this.startDate, 4)
+            this.endDate = addWeeks(this.startDate, 4)
 
 
             this.dateInterval = eachDayOfInterval({
@@ -38,8 +38,8 @@ export default {
         },
 
         moveBack() {
-            this.startDate = addMonths(this.startDate, -1)
-            this.endDate = endOfMonth(this.startDate)
+            this.startDate = addWeeks(this.startDate, -4)
+            this.endDate = addWeeks(this.startDate, 4)
 
 
             this.dateInterval = eachDayOfInterval({
@@ -74,8 +74,8 @@ export default {
     },
 
     created() {
-        this.startDate = startOfMonth(Date.now())
-        this.endDate = endOfMonth(this.startDate)
+        this.startDate = startOfWeek(Date.now())
+        this.endDate = addWeeks(this.startDate, 4)
 
 
         this.dateInterval = eachDayOfInterval({
@@ -104,9 +104,12 @@ export default {
                 <FilterDropDownComponent @save="updateFilter"/>
             </div>
 
+            <div class="month-text inter-five">
+                {{ format(dateInterval[0], "MMMMMMMM") }} - {{ format(dateInterval[19], "MMMMMMMM") }} {{ format(dateInterval[9], "yyyy") }}
+            </div>
             <div class="right-utility-bar">
                 <SpanOptionComponent />
-                <SpanSelectorComponent @forward="moveAhead" @back="moveBack">{{ format(startDate, "MMM") }}
+                <SpanSelectorComponent @forward="moveAhead" @back="moveBack">{{ getWeek(startDate) }} - {{ getWeek(endDate) }}
                 </SpanSelectorComponent>
             </div>
         </div>
@@ -137,7 +140,6 @@ export default {
 .utility-bar {
     display: flex;
     align-items: center;
-    /* justify-content: space-evenly; */
     padding-bottom: 20px;
 }
 
@@ -145,6 +147,12 @@ export default {
     display: flex;
     gap: 25px;
     margin-left: 30px;
+}
+
+.month-text {
+    margin: 0px auto;
+
+    font-size: 20px;
 }
 
 .right-utility-bar {

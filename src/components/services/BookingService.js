@@ -98,7 +98,7 @@ const BookingPipeline = {
 
             if (prevWorker.date === currentWorker.date) {
                 prevWorker.activities = { act1: prevWorker.activities, act2: currentWorker.activities }
-                prevWorker.status = { stat1: prevWorker.status.stat1, stat2: currentWorker.status.stat1}
+                prevWorker.status = { stat1: prevWorker.status.stat1, stat2: currentWorker.status.stat1 }
                 workerData.bookings.splice(i, 1)
             }
         }

@@ -25,8 +25,6 @@ export default {
             }
             for (const filter of this.filters) {
                 for (const prof of this.professions) {
-                    console.log(filter)
-                    console.log(prof)
                     if (filter.name.toLowerCase() === prof.toLowerCase()) {
                         return true;
                     }
