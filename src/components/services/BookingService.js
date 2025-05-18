@@ -1,25 +1,28 @@
-import { format, eachDayOfInterval, isBefore } from "date-fns"
+import { format, eachDayOfInterval, isBefore, formatDate } from "date-fns"
 import testdata from "./test_data/testdata.json"
 import oscar from "./test_data/oscar.json"
 
 const BookingService = {
     //Function for fetching data, implement custom dates later
-    getBookingData() {
+    async getBookingData(start, end) {
         try {
             // let res = await fetch("https://yrgo-web-services.netlify.app/bookings?start=2025-03-31&end=2025-04-25", {
             //     method: "GET"
             // })
 
-            let res = testdata
+            // let res = testdata
+
+            let from = formatDate(start, "yyyy-MM-dd")
+            let to = formatDate(end, "yyyy-MM-dd")
 
             // Future code for custom dates
-            // let res = await fetch("https://yrgo-web-services.netlify.app/bookings?start=" + startDate + "&end=" + endDate, {
-            //     method: "GET"
-            // })
+            let res = await fetch("https://yrgo-web-services.netlify.app/bookings?start=" + from + "&end=" + to, {
+                method: "GET"
+            })
 
-            let data = res
+            let data = await res.json()
 
-            let workerList = BookingPipeline.parseWorkerData(data)
+            let workerList = BookingPipeline.parseWorkerData(data, start, end)
 
             console.log(workerList)
 
@@ -32,12 +35,12 @@ const BookingService = {
 
 //Pipeline handling all data so we can't call it accidentally
 const BookingPipeline = {
-    parseWorkerData(data) {
+    parseWorkerData(data, start, end) {
         let workerList = []
 
         for (const worker of data) {
 
-            const mappedWorker = this.mapWorkerData(worker)
+            const mappedWorker = this.mapWorkerData(worker, start, end)
 
             workerList.push(mappedWorker)
         }
@@ -45,7 +48,7 @@ const BookingPipeline = {
         return workerList
     },
 
-    mapWorkerData(worker) {
+    mapWorkerData(worker, start, end) {
 
         let workerData = {
             name: worker.name,
@@ -63,7 +66,7 @@ const BookingPipeline = {
 
             let arr = []
             for (const date of interval) {
-                if (isBefore(date, new Date(2025, 3, 26)))
+                if (isBefore(date, new Date(end)))
                     arr.push({
                         date: date,
                         activities: booking.activity,
@@ -76,7 +79,7 @@ const BookingPipeline = {
         }
 
         workerData = this.duplicateDateRemap(workerData)
-        workerData = this.buildFullDates(workerData)
+        workerData = this.buildFullDates(workerData, start, end)
 
         return workerData
     },
@@ -95,7 +98,7 @@ const BookingPipeline = {
 
             if (prevWorker.date === currentWorker.date) {
                 prevWorker.activities = { act1: prevWorker.activities, act2: currentWorker.activities }
-                prevWorker.status = { stat1: prevWorker.status.stat1, stat2: currentWorker.status }
+                prevWorker.status = { stat1: prevWorker.status.stat1, stat2: currentWorker.status.stat1}
                 workerData.bookings.splice(i, 1)
             }
         }
@@ -115,24 +118,18 @@ const BookingPipeline = {
     },
 
     //Insert missing days into the worker's bookings for rendering
-    buildFullDates(workerData) {
+    buildFullDates(workerData, start, end) {
 
         //An array of all days in the interval
         //Hardcoded for simplicity, may change
         let fullDates = eachDayOfInterval({
-            start: new Date(2025, 2, 31),
-            end: new Date(2025, 3, 25)
+            start: start,
+            end: end
         }).filter(date => !(date.getDay() === 6 || date.getDay() === 0))
 
         fullDates = this.formatDates(fullDates)
 
         console.log("Building full dates...")
-
-        //If bookings are already filled, skip this worker.
-        //Hardcoded for simplicity, easily changed later
-        if (workerData.bookings.length === 20) {
-            return workerData
-        }
 
         for (const date of fullDates) {
             //Search for a date in fullDates
