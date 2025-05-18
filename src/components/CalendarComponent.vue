@@ -1,7 +1,10 @@
 <script setup>
 import WorkerComponent from "./WorkerComponent.vue"
 import BookingService from "./services/BookingService.js"
-import { format, getDate, eachDayOfInterval } from "date-fns";
+import SpanOptionComponent from "./SpanOptionComponent.vue"
+import SpanSelectorComponent from "./SpanSelectorComponent.vue"
+import { format, getDate, eachDayOfInterval, addWeeks, getWeek, endOfMonth, addMonths, startOfMonth } from "date-fns"
+import FilterDropDownComponent from "./FilterDropDownComponent.vue"
 </script>
 
 <script>
@@ -10,25 +13,81 @@ export default {
         return {
             bookingData: [],
             dateInterval: [],
+            filterList: NodeList,
+            startDate: String,
+            endDate: String,
         }
     },
 
     methods: {
+        moveAhead() {
+            this.startDate = addMonths(this.startDate, 1)
+            this.endDate = endOfMonth(this.startDate)
 
+
+            this.dateInterval = eachDayOfInterval({
+                start: this.startDate,
+                end: this.endDate
+            })
+
+            const noWeekends = this.dateInterval.filter(date => !(date.getDay() === 6 || date.getDay() === 0))
+
+            this.dateInterval = noWeekends
+
+            BookingService.getBookingData(this.startDate, this.endDate).then(data => this.bookingData = data)
+        },
+
+        moveBack() {
+            this.startDate = addMonths(this.startDate, -1)
+            this.endDate = endOfMonth(this.startDate)
+
+
+            this.dateInterval = eachDayOfInterval({
+                start: this.startDate,
+                end: this.endDate
+            })
+
+            const noWeekends = this.dateInterval.filter(date => !(date.getDay() === 6 || date.getDay() === 0))
+
+            this.dateInterval = noWeekends
+
+            BookingService.getBookingData(this.startDate, this.endDate).then(data => this.bookingData = data)
+        },
+
+        updateFilter(checks) {
+            this.filterList = checks
+        },
+
+        sort() {
+            this.bookingData.sort((a, b) => {
+                if(a.name > b.name) {
+                    return 1
+                }
+
+                if(b.name > a.name) {
+                    return -1
+                }
+
+                return 0
+            })
+        }
     },
 
     created() {
+        this.startDate = startOfMonth(Date.now())
+        this.endDate = endOfMonth(this.startDate)
+
+
         this.dateInterval = eachDayOfInterval({
-            start: new Date(2025, 2, 31),
-            end: new Date(2025, 3, 25)
+            start: this.startDate,
+            end: this.endDate
         })
 
         const noWeekends = this.dateInterval.filter(date => !(date.getDay() === 6 || date.getDay() === 0))
 
         this.dateInterval = noWeekends
 
-        this.bookingData = BookingService.getBookingData()
-        // console.log(this.bookingData)
+        BookingService.getBookingData(this.startDate, this.endDate).then(data => this.bookingData = data)
     }
 }
 </script>
@@ -36,48 +95,64 @@ export default {
 <template>
     <div class="calendar">
         <div class="utility-bar">
-            <input type="search" class="search">
-            <button class="default-button">
-                <img src="../assets/sort.svg" alt="sort">
-                <span>Sortera</span>
-            </button>
-            <button class="default-button">
-                <img src="../assets/filter.svg" alt="filter">
-                <span>Filter</span>
-            </button>
+            <div class="left-utility-bar">
+                <input type="search" class="search">
+                <button @click="sort" class="default-button inter-five">
+                    <img src="../assets/sort.svg" alt="sort">
+                    <span>Sortera</span>
+                </button>
+                <FilterDropDownComponent @save="updateFilter"/>
+            </div>
 
-            <div>VECKA 2VECKOR MÅNAD</div>
-            <div>
-                < April 2025>
+            <div class="right-utility-bar">
+                <SpanOptionComponent />
+                <SpanSelectorComponent @forward="moveAhead" @back="moveBack">{{ format(startDate, "MMM") }}
+                </SpanSelectorComponent>
             </div>
         </div>
         <div class="calendar-top">
-            <div class="name-top">Anställd hantverkare</div>
+            <div class="name-top inter-five">Anställd hantverkare</div>
+
             <div v-for="day in dateInterval" class="date">
-                <div class="date-text">{{ format(day, "EEE") }}</div>
+                <div class="date-text inter-seven">{{ format(day, "EEE") }}</div>
                 <div class="date-circle">{{ getDate(day) }}</div>
             </div>
         </div>
-        <WorkerComponent class="worker" v-for="worker in bookingData" :key="worker.name" :name="worker.name"
+        <WorkerComponent class="worker" v-for="worker in bookingData" :key="worker.name" :filters="filterList" :name="worker.name"
             :professions="worker.professions" :bookings="worker.bookings"></WorkerComponent>
     </div>
 </template>
 
 <style scoped>
 .calendar {
-    border-top: 1px solid #D9D9D9;
-    border-left: 1px solid #D9D9D9;
-    border-right: 1px solid #D9D9D9;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-    padding: 20px 0px 20px 0px;
+    padding: 20px 0px 0px 0px;
+    margin-top: 9px;
+
+    width: 1600px;
+
+    border: 1px solid #d9d9d9;
+    border-radius: 10px;
 }
 
 .utility-bar {
     display: flex;
     align-items: center;
-    justify-content: space-evenly;
+    /* justify-content: space-evenly; */
     padding-bottom: 20px;
+}
+
+.left-utility-bar {
+    display: flex;
+    gap: 25px;
+    margin-left: 30px;
+}
+
+.right-utility-bar {
+    display: flex;
+    gap: 15px;
+
+    margin-left: auto;
+    margin-right: 20px;
 }
 
 .search {
@@ -92,25 +167,35 @@ export default {
     border: 1px solid #5D5D5D;
     border-radius: 20px;
 
-    padding-left: 10px;
+    padding-left: 35px;
+    padding-right: 10px;
 }
 
 .calendar-top {
     display: flex;
     gap: 10px;
+    justify-content: space-evenly;
 
-    padding: 5px 0px 7px 0px;
+    position: sticky;
+    top: 0px;
+
+    padding: 5px 20px 7px 0px;
     margin-bottom: 17px;
+
+    background-color: #fff;
 
     border-top: 1px solid #D9D9D9;
     border-bottom: 1px solid #D9D9D9;
 }
 
 .name-top {
-    width: 230px;
+    width: 210px;
 
     text-align: center;
-    padding-top: 15px;
+    padding-top: 18px;
+    /* padding-left: 30px; */
+
+    font-size: 16px;
 }
 
 .date {
@@ -128,6 +213,8 @@ export default {
 
 .date-text {
     width: 100%;
+
+    font-size: 15px;
 }
 
 .date-circle {
