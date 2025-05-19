@@ -38,12 +38,14 @@ export default {
         <div> {{ stat.stat1.slice(0, 4) }}. </div>
         <div> {{ stat.stat2.slice(0, 4) }}. </div>
     </div>
-    <div v-else-if="percentage === 50" class="day-box inter-four" :class="[stat.stat1, stat.stat2, percentageString, activities.act1]">
+    <div v-else-if="percentage === 50" class="day-box inter-four"
+        :class="[stat.stat1, stat.stat2, percentageString, activities.act1]">
         <div> {{ percentage }}%</div>
         <div> {{ stat.stat1.slice(0, 4) }}. </div>
     </div>
-    <div v-else-if="percentage === 100 || percentage === 0" class="day-box inter-four" :class="[stat.stat1, stat.stat2, percentageString]">
-        <span v-if="stat === 'Preliminary'">Prel.</span><span v-if="stat.stat1 != 'Absent' ">{{ percentage }}%</span>
+    <div v-else-if="percentage === 100 || percentage === 0" class="day-box inter-four"
+        :class="[stat.stat1, stat.stat2, percentageString]">
+        <span v-if="stat === 'Preliminary'">Prel.</span><span v-if="stat.stat1 != 'Absent'">{{ percentage }}%</span>
     </div>
 </template>
 
@@ -58,8 +60,11 @@ export default {
     justify-content: center;
     align-items: center;
     font-size: 17px;
-    
+
     border-radius: 10px;
+}
+
+.zero {
     background-color: #ADE4C4;
 }
 
@@ -84,6 +89,6 @@ export default {
 }
 
 .Booked-half {
-    background: linear-gradient(#FEE69B 50%, #F6CA6C 50% );
+    background: linear-gradient(#FEE69B 50%, #F6CA6C 50%);
 }
 </style>

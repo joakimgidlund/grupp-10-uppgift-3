@@ -34,10 +34,6 @@ export default {
             return false;
         }
     },
-
-    created() {
-    }
-
 }
 </script>
 

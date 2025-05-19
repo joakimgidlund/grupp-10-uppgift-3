@@ -1,10 +1,11 @@
 <script setup>
 import WorkerComponent from "./WorkerComponent.vue"
-import BookingService from "./services/BookingService.js"
 import SpanOptionComponent from "./SpanOptionComponent.vue"
 import SpanSelectorComponent from "./SpanSelectorComponent.vue"
-import { format, getDate, eachDayOfInterval, addWeeks, getWeek, endOfMonth, addMonths, startOfMonth, startOfWeek } from "date-fns"
 import FilterDropDownComponent from "./FilterDropDownComponent.vue"
+
+import BookingService from "./services/BookingService.js"
+import { format, getDate, eachDayOfInterval, addWeeks, getWeek, startOfWeek } from "date-fns"
 </script>
 
 <script>
@@ -60,11 +61,11 @@ export default {
 
         sort() {
             this.bookingData.sort((a, b) => {
-                if(a.name > b.name) {
+                if (a.name > b.name) {
                     return 1
                 }
 
-                if(b.name > a.name) {
+                if (b.name > a.name) {
                     return -1
                 }
 
@@ -101,15 +102,17 @@ export default {
                     <img src="../assets/sort.svg" alt="sort">
                     <span>Sortera</span>
                 </button>
-                <FilterDropDownComponent @save="updateFilter"/>
+                <FilterDropDownComponent @save="updateFilter" />
             </div>
 
             <div class="month-text inter-five">
-                {{ format(dateInterval[0], "MMMMMMMM") }} - {{ format(dateInterval[19], "MMMMMMMM") }} {{ format(dateInterval[9], "yyyy") }}
+                {{ format(dateInterval[0], "MMM") }} - {{ format(dateInterval[dateInterval.length-1], "MMM") }} {{
+                    format(dateInterval[9], "yyyy") }}
             </div>
             <div class="right-utility-bar">
                 <SpanOptionComponent />
-                <SpanSelectorComponent @forward="moveAhead" @back="moveBack">{{ getWeek(startDate) }} - {{ getWeek(endDate) }}
+                <SpanSelectorComponent @forward="moveAhead" @back="moveBack">{{ getWeek(startDate) }} - {{
+                    getWeek(endDate) - 1 }}
                 </SpanSelectorComponent>
             </div>
         </div>
@@ -121,8 +124,8 @@ export default {
                 <div class="date-circle">{{ getDate(day) }}</div>
             </div>
         </div>
-        <WorkerComponent class="worker" v-for="worker in bookingData" :key="worker.name" :filters="filterList" :name="worker.name"
-            :professions="worker.professions" :bookings="worker.bookings"></WorkerComponent>
+        <WorkerComponent class="worker" v-for="worker in bookingData" :key="worker.name" :filters="filterList"
+            :name="worker.name" :professions="worker.professions" :bookings="worker.bookings"></WorkerComponent>
     </div>
 </template>
 
@@ -131,7 +134,7 @@ export default {
     padding: 20px 0px 0px 0px;
     margin-top: 9px;
 
-    width: 1600px;
+    width: 1440px;
 
     border: 1px solid #d9d9d9;
     border-radius: 10px;
@@ -201,7 +204,6 @@ export default {
 
     text-align: center;
     padding-top: 18px;
-    /* padding-left: 30px; */
 
     font-size: 16px;
 }

@@ -3,19 +3,11 @@ import testdata from "./test_data/testdata.json"
 import oscar from "./test_data/oscar.json"
 
 const BookingService = {
-    //Function for fetching data, implement custom dates later
     async getBookingData(start, end) {
         try {
-            // let res = await fetch("https://yrgo-web-services.netlify.app/bookings?start=2025-03-31&end=2025-04-25", {
-            //     method: "GET"
-            // })
-
-            // let res = testdata
-
             let from = formatDate(start, "yyyy-MM-dd")
             let to = formatDate(end, "yyyy-MM-dd")
 
-            // Future code for custom dates
             let res = await fetch("https://yrgo-web-services.netlify.app/bookings?start=" + from + "&end=" + to, {
                 method: "GET"
             })
@@ -61,7 +53,7 @@ const BookingPipeline = {
                 start: booking.from,
                 end: booking.to,
             }).filter(date => !(date.getDay() === 6 || date.getDay() === 0))
-            //This filters out all weekends
+
             interval = this.formatDates(interval)
 
             let arr = []
@@ -121,7 +113,6 @@ const BookingPipeline = {
     buildFullDates(workerData, start, end) {
 
         //An array of all days in the interval
-        //Hardcoded for simplicity, may change
         let fullDates = eachDayOfInterval({
             start: start,
             end: end
@@ -132,7 +123,6 @@ const BookingPipeline = {
         console.log("Building full dates...")
 
         for (const date of fullDates) {
-            //Search for a date in fullDates
             let tempDate = workerData.bookings.find(booking => {
                 return booking.date === date
             })
@@ -150,9 +140,7 @@ const BookingPipeline = {
                 return new Date(a.date) - new Date(b.date)
             })
         }
-
-        // workerData.bookings.splice(20)
-
+        
         return workerData
     }
 }

@@ -97,11 +97,7 @@ export default {
     border: 1px solid #d9d9d9;
     border-radius: 5px;
 
-    /* display: flex;
-    flex-direction: column; */
-
     font-size: 12px;
-    /* opacity: 0; */
 }
 
 input[type="checkbox"] {

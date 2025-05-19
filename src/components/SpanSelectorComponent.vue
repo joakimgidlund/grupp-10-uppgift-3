@@ -14,7 +14,9 @@ export default {
         <button @click="$emit('back')"><img src="../assets/nav_arrow.svg" alt="left arrow"></button>
         <div class="week-box">
             <div class="inter-four">Vecka</div>
-            <span class="inter-five"><slot></slot></span>
+            <span class="inter-five">
+                <slot></slot>
+            </span>
         </div>
         <button @click="$emit('forward')"><img src="../assets/nav_arrow.svg" alt="right arrow" class="flip"></button>
     </div>
@@ -38,7 +40,7 @@ span {
     width: 100px;
 }
 
-.week-box > div {
+.week-box>div {
     margin: -10px;
     font-size: 12px;
 }
