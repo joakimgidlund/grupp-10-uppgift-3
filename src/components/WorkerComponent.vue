@@ -32,6 +32,18 @@ export default {
             }
 
             return false;
+        },
+
+        toString(percentage) {
+            if(percentage === 100) {
+                return "hundred"
+            }
+            
+            if(percentage === 50) {
+                return "fifty"
+            }
+
+            return "zero"
         }
     },
 }
@@ -52,7 +64,7 @@ export default {
                 </div>
             </div>
         </div>
-        <DayComponent v-for="day of bookings" :percentage="day.percentage" :stat="day.status"
+        <DayComponent v-for="day of bookings" :percentageString="toString(day.percentage)" :percentage="day.percentage" :stat="day.status"
             :activities="day.activities"></DayComponent>
     </div>
 </template>
