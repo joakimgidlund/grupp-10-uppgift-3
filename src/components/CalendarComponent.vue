@@ -97,7 +97,7 @@ export default {
     <div class="calendar">
         <div class="utility-bar">
             <div class="left-utility-bar">
-                <input type="search" class="search">
+                <input type="search" class="search inter-four">
                 <button @click="sort" class="default-button inter-five">
                     <img src="../assets/sort.svg" alt="sort">
                     <span>Sortera</span>
@@ -175,10 +175,12 @@ export default {
     height: 40px;
     width: 300px;
 
+    font-size: 14px;
+
     border: 1px solid #5D5D5D;
     border-radius: 20px;
 
-    padding-left: 35px;
+    padding-left: 38px;
     padding-right: 10px;
 }
 
