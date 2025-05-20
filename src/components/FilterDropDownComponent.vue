@@ -50,6 +50,9 @@ export default {
             <img src="../assets/filter.svg" alt="filter">
             <span>Filter</span>
         </button>
+
+        <!-- Known bug. Strange behavior with checkboxes, temp fix by unchecking them all. Means we "lose"
+         the current filter when the dropdown is opened again. No impact on functionality. -->
         <div v-if="isOpen" class="dropdown inter-four">
             <ul>
                 <li>
@@ -77,12 +80,6 @@ export default {
 </template>
 
 <style scoped>
-* {
-    box-sizing: border-box;
-}
-
-.wrapper {}
-
 .dropdown {
     position: absolute;
     width: 155px;

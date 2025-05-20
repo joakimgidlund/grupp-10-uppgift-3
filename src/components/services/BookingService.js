@@ -15,8 +15,6 @@ const BookingService = {
 
             let workerList = BookingPipeline.parseWorkerData(data, start, end)
 
-            // console.log(workerList)
-
             return workerList
         } catch (err) {
             console.log(err)
@@ -104,7 +102,7 @@ const BookingPipeline = {
         for (let date of dates) {
             arr.push(format(date, "yyyy/MM/dd"))
         }
-        // console.log(arr)
+
         return arr
     },
 
@@ -118,8 +116,6 @@ const BookingPipeline = {
         }).filter(date => !(date.getDay() === 6 || date.getDay() === 0))
 
         fullDates = this.formatDates(fullDates)
-
-        console.log("Building full dates...")
 
         for (const date of fullDates) {
             let tempDate = workerData.bookings.find(booking => {

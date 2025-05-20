@@ -1,10 +1,5 @@
 <script>
 export default {
-    props: {
-        startWeek: Number,
-        endWeek: Number
-    },
-
     emits: ["back", "forward"]
 }
 </script>
@@ -57,7 +52,6 @@ button:hover {
 button:active {
     scale: 0.9;
 }
-
 
 .flip {
     transform: rotate(180deg);
