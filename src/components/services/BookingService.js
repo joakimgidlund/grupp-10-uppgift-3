@@ -1,8 +1,7 @@
 import { format, eachDayOfInterval, isBefore, formatDate } from "date-fns"
-import testdata from "./test_data/testdata.json"
-import oscar from "./test_data/oscar.json"
 
 const BookingService = {
+    //Extremely minimal error handling, not suitable for "production"
     async getBookingData(start, end) {
         try {
             let from = formatDate(start, "yyyy-MM-dd")
@@ -16,7 +15,7 @@ const BookingService = {
 
             let workerList = BookingPipeline.parseWorkerData(data, start, end)
 
-            console.log(workerList)
+            // console.log(workerList)
 
             return workerList
         } catch (err) {
@@ -76,7 +75,7 @@ const BookingPipeline = {
         return workerData
     },
 
-    //Merges two overlapping dates into one
+    //Finds and merges all duplicate dates in the worker's bookings
     duplicateDateRemap(workerData) {
 
         //Asc. sorting before merging logic
