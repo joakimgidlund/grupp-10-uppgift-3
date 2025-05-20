@@ -17,14 +17,16 @@ export default {
             filterList: NodeList,
             startDate: String,
             endDate: String,
+            displayWeek: { start: Number, end: Number }
         }
     },
 
     methods: {
-        moveAhead() {
-            this.startDate = addWeeks(this.startDate, 4)
+        move(weeks) {
+            this.startDate = addWeeks(this.startDate, weeks)
             this.endDate = addWeeks(this.startDate, 4)
 
+            this.setWeeks()
 
             this.dateInterval = eachDayOfInterval({
                 start: this.startDate,
@@ -38,21 +40,29 @@ export default {
             BookingService.getBookingData(this.startDate, this.endDate).then(data => this.bookingData = data)
         },
 
-        moveBack() {
-            this.startDate = addWeeks(this.startDate, -4)
-            this.endDate = addWeeks(this.startDate, 4)
+        // moveBack() {
+        //     this.startDate = addWeeks(this.startDate, -4)
+        //     this.endDate = addWeeks(this.startDate, 4)
 
 
-            this.dateInterval = eachDayOfInterval({
-                start: this.startDate,
-                end: this.endDate
-            })
+        //     this.dateInterval = eachDayOfInterval({
+        //         start: this.startDate,
+        //         end: this.endDate
+        //     })
 
-            const noWeekends = this.dateInterval.filter(date => !(date.getDay() === 6 || date.getDay() === 0))
+        //     const noWeekends = this.dateInterval.filter(date => !(date.getDay() === 6 || date.getDay() === 0))
 
-            this.dateInterval = noWeekends
+        //     this.dateInterval = noWeekends
 
-            BookingService.getBookingData(this.startDate, this.endDate).then(data => this.bookingData = data)
+        //     BookingService.getBookingData(this.startDate, this.endDate).then(data => this.bookingData = data)
+        // },
+        setWeeks() {
+            this.displayWeek.start = getWeek(this.startDate)
+            this.displayWeek.end = getWeek(this.endDate) - 1
+
+            if(this.displayWeek.end === 0) {
+                this.displayWeek.end = 52
+            }
         },
 
         updateFilter(checks) {
@@ -77,6 +87,8 @@ export default {
     created() {
         this.startDate = startOfWeek(Date.now())
         this.endDate = addWeeks(this.startDate, 4)
+
+        this.setWeeks()
 
 
         this.dateInterval = eachDayOfInterval({
@@ -106,13 +118,13 @@ export default {
             </div>
 
             <div class="month-text inter-five">
-                {{ format(dateInterval[0], "MMM") }} - {{ format(dateInterval[dateInterval.length-1], "MMM") }} {{
+                {{ format(dateInterval[0], "MMM") }} - {{ format(dateInterval[dateInterval.length - 1], "MMM") }} {{
                     format(dateInterval[9], "yyyy") }}
             </div>
             <div class="right-utility-bar">
                 <SpanOptionComponent />
-                <SpanSelectorComponent @forward="moveAhead" @back="moveBack">{{ getWeek(startDate) }} - {{
-                    getWeek(endDate) - 1 }}
+                <SpanSelectorComponent @forward="move(4)" @back="move(-4)">{{ displayWeek.start }} - {{
+                    displayWeek.end }}
                 </SpanSelectorComponent>
             </div>
         </div>
