@@ -46,7 +46,7 @@ export default {
 
 <template>
     <div class="wrapper">
-        <button @click="openAndClose()" id="filter" class="default-button inter-five">
+        <button @click="openAndClose" id="filter" class="default-button inter-five">
             <img src="../assets/filter.svg" alt="filter">
             <span>Filter</span>
         </button>
