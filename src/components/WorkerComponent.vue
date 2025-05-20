@@ -1,7 +1,5 @@
 <script setup>
-import { isAfter, compareAsc, eachDayOfInterval } from "date-fns"
 import DayComponent from "./DayComponent.vue"
-import BookingService from "./services/BookingService.js"
 </script>
 
 <script>
@@ -30,11 +28,10 @@ export default {
                     }
                 }
             }
-
             return false;
         },
 
-        toString(percentage) {
+        numberToString(percentage) {
             if(percentage === 100) {
                 return "hundred"
             }
@@ -64,7 +61,7 @@ export default {
                 </div>
             </div>
         </div>
-        <DayComponent v-for="day of bookings" :percentageString="toString(day.percentage)" :percentage="day.percentage" :stat="day.status"
+        <DayComponent v-for="day of bookings" :percentageString="numberToString(day.percentage)" :percentage="day.percentage" :stat="day.status"
             :activities="day.activities"></DayComponent>
     </div>
 </template>

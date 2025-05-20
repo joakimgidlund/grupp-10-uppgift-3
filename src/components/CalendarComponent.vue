@@ -17,12 +17,13 @@ export default {
             filterList: NodeList,
             startDate: String,
             endDate: String,
-            displayWeek: { start: Number, end: Number }
+            displayWeek: { start: Number, end: Number },
+            sorted: undefined,
         }
     },
 
     methods: {
-        move(weeks) {
+        changePeriod(weeks) {
             this.startDate = addWeeks(this.startDate, weeks)
             this.endDate = addWeeks(this.startDate, 4)
 
@@ -40,27 +41,11 @@ export default {
             BookingService.getBookingData(this.startDate, this.endDate).then(data => this.bookingData = data)
         },
 
-        // moveBack() {
-        //     this.startDate = addWeeks(this.startDate, -4)
-        //     this.endDate = addWeeks(this.startDate, 4)
-
-
-        //     this.dateInterval = eachDayOfInterval({
-        //         start: this.startDate,
-        //         end: this.endDate
-        //     })
-
-        //     const noWeekends = this.dateInterval.filter(date => !(date.getDay() === 6 || date.getDay() === 0))
-
-        //     this.dateInterval = noWeekends
-
-        //     BookingService.getBookingData(this.startDate, this.endDate).then(data => this.bookingData = data)
-        // },
         setWeeks() {
             this.displayWeek.start = getWeek(this.startDate)
             this.displayWeek.end = getWeek(this.endDate) - 1
 
-            if(this.displayWeek.end === 0) {
+            if (this.displayWeek.end === 0) {
                 this.displayWeek.end = 52
             }
         },
@@ -69,18 +54,34 @@ export default {
             this.filterList = checks
         },
 
-        sort() {
-            this.bookingData.sort((a, b) => {
-                if (a.name > b.name) {
-                    return 1
-                }
+        sortWorkersByName() {
+            if (this.sorted === "desc" || this.sorted === undefined) {
+                this.bookingData.sort((a, b) => {
+                    if (a.name > b.name) {
+                        return 1
+                    }
 
-                if (b.name > a.name) {
-                    return -1
-                }
+                    if (b.name > a.name) {
+                        return -1
+                    }
 
-                return 0
-            })
+                    return 0
+                })
+                this.sorted = "asc"
+            } else {
+                this.bookingData.sort((a, b) => {
+                    if (a.name < b.name) {
+                        return 1
+                    }
+
+                    if (b.name < a.name) {
+                        return -1
+                    }
+
+                    return 0
+                })
+                this.sorted = "desc"
+            }
         }
     },
 
@@ -110,7 +111,7 @@ export default {
         <div class="utility-bar">
             <div class="left-utility-bar">
                 <input type="search" class="search inter-four">
-                <button @click="sort" class="default-button inter-five">
+                <button @click="sortWorkersByName" class="default-button inter-five">
                     <img src="../assets/sort.svg" alt="sort">
                     <span>Sortera</span>
                 </button>
@@ -119,11 +120,11 @@ export default {
 
             <div class="month-text inter-five">
                 {{ format(dateInterval[0], "MMM") }} - {{ format(dateInterval[dateInterval.length - 1], "MMM") }} {{
-                    format(dateInterval[9], "yyyy") }}
+                    format(dateInterval[dateInterval.length - 1], "yyyy") }}
             </div>
             <div class="right-utility-bar">
                 <SpanOptionComponent />
-                <SpanSelectorComponent @forward="move(4)" @back="move(-4)">{{ displayWeek.start }} - {{
+                <SpanSelectorComponent @forward="changePeriod(4)" @back="changePeriod(-4)">{{ displayWeek.start }} - {{
                     displayWeek.end }}
                 </SpanSelectorComponent>
             </div>
