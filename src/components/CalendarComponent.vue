@@ -28,6 +28,7 @@ export default {
             this.endDate = addWeeks(this.startDate, 4)
 
             this.setWeeks()
+            this.sorted = undefined //reset sort
 
             this.dateInterval = eachDayOfInterval({
                 start: this.startDate,
